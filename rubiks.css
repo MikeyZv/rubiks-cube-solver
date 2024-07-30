@@ -1,0 +1,109 @@
+:root {
+    --cube-width: 100px;
+    --translateZ: 50px;
+}
+
+#main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: none;
+    height: 1000px;
+}
+
+.whole {
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: spin 5s linear infinite;
+}
+
+.side-front {
+    transform-style: preserve-3d;
+    display: flex;
+    position: absolute;
+    transform: translate3d(0,0,100px);
+}
+
+.side-middle {
+    transform-style: preserve-3d;
+    position: absolute;
+    display: flex;
+}
+
+.side-back {
+    transform-style: preserve-3d;
+    display: flex;
+    position: absolute;
+    transform: translate3d(0,0,-100px);
+}
+
+.column-1 {
+    transform-style: preserve-3d;
+}
+
+.column-2 {
+    transform-style: preserve-3d;
+}
+
+.column-3 {
+    transform-style: preserve-3d;
+}
+
+.cube {
+    transform-style: preserve-3d;
+    height: var(--cube-width);
+    width: var(--cube-width);
+}
+
+
+.cube-face {
+    height: var(--cube-width);
+    width: var(--cube-width);
+    background-color: blue;
+    position: absolute;
+    
+}
+
+#front {
+    background-color: green;
+    transform: translate3d(0,0,var(--translateZ));
+    display: flex;
+}
+
+#back {
+    background-color: blue;
+    transform: rotate3d(0,1,0,180deg) translate3d(0,0,var(--translateZ));
+}
+
+#left {
+    background-color: orange;
+    transform: rotate3d(0,1,0,-90deg) translate3d(0,0,var(--translateZ));
+}
+
+#right {
+    background-color: red;
+    transform: rotate3d(0,1,0,90deg) translate3d(0,0,var(--translateZ));
+}
+
+#top {
+    background-color: white;
+    transform: rotate3d(1,0,0,90deg) translate3d(0,0,var(--translateZ));
+}
+
+#bottom {
+    background-color: yellow;
+    transform: rotate3d(1,0,0,-90deg) translate3d(0,0,var(--translateZ));
+} 
+
+@keyframes spin {
+    0% {
+        transform: rotate3d(1,0,1, 0deg);
+    } 100% {
+        transform: rotate3d(1,0,1, 360deg);
+    } 
+}
+
+
+
