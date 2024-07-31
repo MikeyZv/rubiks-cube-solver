@@ -7,6 +7,10 @@ let orange = [];
 frontDegree = 90;
 backDegree = 90;
 midVertDegree = 90;
+midHorDegree = 90;
+bottomDegree = 90;
+topDegree = 90;
+
 
 function rotateFront() {
     // let transformations = {
@@ -32,13 +36,25 @@ function rotateFront() {
     // }, 1500)
 };
 
-function rotateMidVert() {
+function rotateMidVertical() {
     let midVert = document.querySelector(".side-middle");
     midVert.style.transform = "rotate3d(0,0,1," +midVertDegree+ "deg)";
     if (midVertDegree >= 360) {
         midVertDegree = 90;
     } else {
         midVertDegree += 90;
+    }
+}
+
+function rotateMidHorizontal() {
+    let midHor = document.getElementsByClassName("mid-layer");
+    for (let i = 0; i < midHor.length; i++) {
+        midHor[i].style.transform = "rotate3d(0,1,0," +midHorDegree+ "deg)";
+    }
+    if (midHorDegree >= 360) {
+        midHorDegree = 90;
+    } else {
+        midHorDegree += 90;
     }
 }
 
@@ -52,8 +68,36 @@ function rotateBack() {
     }
 }
 
-setInterval(rotateFront, 1000);
-setInterval(rotateBack, 500);
-setInterval(rotateMidVert, 700);
+function rotateBottom() {
+    let bottom = document.getElementsByClassName("bottom-layer");
+    for (let i = 0; i < bottom.length; i++) {
+        bottom[i].style.transform = "rotate3d(0,1,0," +bottomDegree+ "deg)";
+    }
+    if (bottomDegree >= 360) {
+        bottomDegree = 90;
+    } else {
+        bottomDegree += 90;
+    }
+}
+
+function rotateTop() {
+    let top = document.getElementsByClassName("top-layer");
+    for (let i = 0; i < top.length; i++) {
+        top[i].style.transform = "rotate3d(0,1,0," +topDegree+ "deg)";
+    }
+    if (topDegree >= 360) {
+        topDegree = 90;
+    } else {
+        topDegree += 90;
+    }
+}
+
+
+setInterval(rotateTop, 800);
+setInterval(rotateBottom, 500);
+setInterval(rotateFront, 200);
+setInterval(rotateBack, 400);
+setInterval(rotateMidVertical, 700);
+setInterval(rotateMidHorizontal, 300);
 
 

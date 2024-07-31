@@ -39,6 +39,7 @@
     transform: translate3d(0,0,-100px);
 }
 
+/* columns starting from left to right */
 .column-1 {
     transform-style: preserve-3d;
 }
@@ -51,6 +52,7 @@
     transform-style: preserve-3d;
 }
 
+/* cubes */
 .cube {
     transform-style: preserve-3d;
     height: var(--cube-width);
@@ -66,36 +68,37 @@
     
 }
 
-#front {
+.front {
     background-color: green;
     transform: translate3d(0,0,var(--translateZ));
     display: flex;
 }
 
-#back {
+.back {
     background-color: blue;
     transform: rotate3d(0,1,0,180deg) translate3d(0,0,var(--translateZ));
 }
 
-#left {
+.left {
     background-color: orange;
     transform: rotate3d(0,1,0,-90deg) translate3d(0,0,var(--translateZ));
 }
 
-#right {
+.right {
     background-color: red;
     transform: rotate3d(0,1,0,90deg) translate3d(0,0,var(--translateZ));
 }
 
-#top {
+.top {
     background-color: white;
     transform: rotate3d(1,0,0,90deg) translate3d(0,0,var(--translateZ));
 }
 
-#bottom {
+.bottom {
     background-color: yellow;
     transform: rotate3d(1,0,0,-90deg) translate3d(0,0,var(--translateZ));
 } 
+
 
 @keyframes spin {
     0% {
