@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: spin 5s linear infinite;
+    /* animation: spin 5s linear infinite; */
 }
 
 .side-front {
@@ -48,12 +48,45 @@
     transform-style: preserve-3d;
 }
 
+.left-corner-z-pos-rotate-y {
+    transform-origin: 150px center -100px;
+}
+
+.left-edge-z-rotate-y{
+    transform-origin: 150px center 0px;
+}
+
+.left-corner-z-neg-rotate-y {
+    transform-origin: 150px center 100px;
+}
+
+
 .column-2 {
     transform-style: preserve-3d;
 }
 
+.middle-edge-z-pos-rotate-y {
+    transform-origin: center center -100px;
+}
+
+.middle-edge-z-neg-rotate-y {
+    transform-origin: center center 100px;
+}
+
 .column-3 {
     transform-style: preserve-3d;
+}
+
+.right-corner-z-pos-rotate-y {
+    transform-origin: -50px center -100px;
+}
+
+.right-edge-z-rotate-y {
+    transform-origin: -50px center 0px;
+}
+
+.right-corner-z-neg-rotate-y {
+    transform-origin: -50px center 100px;
 }
 
 /* cubes */
@@ -69,8 +102,7 @@
     width: var(--cube-width);
     background-color: blue;
     position: absolute;
-    outline: 1px black solid;
-    
+    /* outline: 1px black solid; */
 }
 
 .front {
@@ -104,13 +136,162 @@
     transform: rotate3d(1,0,0,-90deg) translate3d(0,0,var(--translateZ));
 } 
 
+/* classes for cube to spin around x-axis */
+.spin90-x-axis {
+    animation: spin90-x-axis .5s ease-in 1;
+}
+
+.spin180-x-axis {
+    animation: spin180-x-axis .5s ease-in 1;
+}
+
+.spin270-x-axis {
+    animation: spin270-x-axis .5s ease-in 1;
+}
+
+.spin360-x-axis {
+    animation: spin360-x-axis .5s ease-in 1;
+}
+
+/* classes for cube to spin around y-axis */
+.spin90-y-axis {
+    animation: spin90-y-axis .5s ease-in 1;
+}
+
+.spin180-y-axis {
+    animation: spin180-y-axis .5s ease-in 1;
+}
+
+.spin270-y-axis {
+    animation: spin270-y-axis .5s ease-in 1;
+}
+
+.spin360-y-axis {
+    animation: spin360-y-axis .5s ease-in 1;
+}
+
+/* classes for cube to spin around z-axis */
+.spin90-z-axis {
+    animation: spin90-z-axis .5s ease-in 1;
+}
+
+.spin180-z-axis {
+    animation: spin180-z-axis .5s ease-in 1;
+}
+
+.spin270-z-axis {
+    animation: spin270-z-axis .5s ease-in 1;
+}
+
+.spin360-z-axis {
+    animation: spin360-z-axis .5s ease-in 1;
+}
 
 @keyframes spin {
     0% {
-        transform: rotate3d(1,0,1, 0deg);
+        transform: rotate3d(1,1,1, 0deg);
     } 100% {
-        transform: rotate3d(1,0,1, 360deg);
+        transform: rotate3d(1,1,1, 360deg);
     } 
+} 
+
+/* animations for cube to spin around x-axis */
+@keyframes spin90-x-axis {
+    0% {
+        transform: rotate3d(1,0,0, 0deg);
+    } 100% {
+        transform: rotate3d(1,0,0, 90deg);
+    } 
+} 
+
+@keyframes spin180-x-axis {
+    0% {
+        transform: rotate3d(1,0,0, 90deg);
+    } 100% {
+        transform: rotate3d(1,0,0, 180deg);
+    } 
+}
+
+@keyframes spin270-x-axis {
+    0% {
+        transform: rotate3d(1,0,0, 180deg);
+    } 100% {
+        transform: rotate3d(1,0,0, 270deg);
+    } 
+}
+
+@keyframes spin360-x-axis {
+    0% {
+        transform: rotate3d(1,0,0, 270deg);
+    } 100% {
+        transform: rotate3d(1,0,0, 360deg);
+    } 
+}
+
+/* animations for cube to spin around y-axis */
+@keyframes spin90-y-axis {
+    0% {
+        transform: rotate3d(0,1,0, 0deg);
+    } 100% {
+        transform: rotate3d(0,1,0, 90deg);
+    } 
+} 
+
+@keyframes spin180-y-axis {
+    0% {
+        transform: rotate3d(0,1,0, 90deg);
+    } 100% {
+        transform: rotate3d(0,1,0, 180deg);
+    } 
+}
+
+@keyframes spin270-y-axis {
+    0% {
+        transform: rotate3d(0,1,0, 180deg);
+    } 100% {
+        transform: rotate3d(0,1,0, 270deg);
+    } 
+}
+
+@keyframes spin360-y-axis {
+    0% {
+        transform: rotate3d(0,1,0, 270deg);
+    } 100% {
+        transform: rotate3d(0,1,0, 360deg);
+    } 
+}
+
+/* animations for cube to spin around z-axis */
+@keyframes spin90-z-axis {
+    0% {
+        transform: rotate3d(0,0,1, 0deg);
+    } 100% {
+        transform: rotate3d(0,0,1, 90deg);
+    } 
+} 
+
+@keyframes spin180-z-axis {
+    0% {
+        transform: rotate3d(0,0,1, 90deg);
+    } 100% {
+        transform: rotate3d(0,0,1, 180deg);
+    } 
+}
+
+@keyframes spin270-z-axis {
+    0% {
+        transform: rotate3d(0,0,1, 180deg);
+    } 100% {
+        transform: rotate3d(0,0,1, 270deg);
+    } 
+}
+
+@keyframes spin360-z-axis {
+    0% {
+        transform: rotate3d(0,0,1, 270deg);
+    } 100% {
+        transform: rotate3d(0,0,1, 360deg);
+    }
 }
 
 
