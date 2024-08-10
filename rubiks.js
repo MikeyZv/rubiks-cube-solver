@@ -4,6 +4,7 @@ let blue = [];
 let green = [];
 let white = [];
 let orange = [];
+
 let frontDegree = 0;
 let midVertDegree = 0;
 let backDegree = 0;
@@ -16,55 +17,201 @@ let bottomDegree = 0;
 
 
 function rotateFront() { 
-    let front = document.querySelector(".side-front");
-    let transformations = {
-        transform: "rotate3d(0,0,1, " +(frontDegree)+ "deg) translate3d(0,0,100px)",
-        transform: "rotate3d(0,0,1, " +(frontDegree+90)+ "deg) translate3d(0,0,100px)",
+    let front = document.querySelectorAll(".front-side");
+    
+    //top-left-corner
+    front[0].style.transformOrigin = "150px 150px 0px";
+
+    //left-middle-edge
+    front[1].style.transformOrigin = "150px center 0px";
+
+    //bottom-left-corner
+    front[2].style.transformOrigin = "150px -50px 0px";
+
+    //top-middle-edge
+    front[3].style.transformOrigin = "center 150px 0px";
+
+    //bottom-middle-edge
+    front[5].style.transformOrigin = "center -50px 0px";
+
+    //top-right-corner
+    front[6].style.transformOrigin = "-50px 150px 0px";
+
+    //right-middle-edge
+    front[7].style.transformOrigin = "-50px center 0px";
+
+    //bottom-right-corner
+    front[8].style.transformOrigin = "-50px -50px 0px";
+    
+    //adds spinning animation dependent the side being turned
+    if (frontDegree == 0) {
+        for (let i = 0; i < front.length; i++) {
+            front[i].classList.add("spin90-z-axis");
+        }
+    } else if (frontDegree == 90) {
+        for (let i = 0; i < front.length; i++) {
+            front[i].classList.add("spin180-z-axis");
+        }
+    } else if (frontDegree == 180) {
+        for (let i = 0; i < front.length; i++) {
+            front[i].classList.add("spin270-z-axis");
+        }
+    } else if (frontDegree == 270) {
+        for (let i = 0; i < front.length; i++) {
+            front[i].classList.add("spin360-z-axis");
+        }
     }
-    let keyframesTiming = {
-        duration: 500,
-        iterations: 1,
-    }
-    front.animate(transformations, keyframesTiming);
-    // setTimeout(()=>{
-    //     front.style.transform = "rotate3d(0,0,1, " +(frontDegree)+ "deg) translate3d(0,0,100px)";
-    //     front.style.transform = "rotate3d(0,0,1, " +(frontDegree+90)+ "deg) translate3d(0,0,100px)";
-    // }, 500)
+
+    //waits for animation to play before spinning the individuals cubes
+    setTimeout(()=>{
+        for (let i = 0; i < front.length; i++) {
+            front[i].classList.remove("spin90-z-axis");
+            front[i].classList.remove("spin180-z-axis");
+            front[i].classList.remove("spin270-z-axis");
+            front[i].classList.remove("spin360-z-axis");
+            front[i].style.transformOrigin = "center";
+        }
+        for (let i = 0; i < front.length; i++) {
+            front[i].style.transform = "rotate3d(0,0,1, " +(frontDegree)+ "deg)";
+            front[i].style.transform = "rotate3d(0,0,1, " +(frontDegree+90)+ "deg)";
+        }
+        if (frontDegree == 270) {
+            frontDegree = 0;
+        } else {
+            frontDegree += 90;
+        }
+    }, 500)
 };
 
 function rotateMiddleVertical() {
-    let midVert = document.querySelector(".side-middle");
-    let transformations = {
-        transform: "rotate3d(0,0,1, " +(midVertDegree)+ "deg)",
-        transform: "rotate3d(0,0,1, " +(midVertDegree+90)+ "deg)",
+    let midVert = document.querySelectorAll(".middle-side");
+    //top-left-corner
+    midVert[0].style.transformOrigin = "150px 150px -100px";
+
+    //left-middle-edge
+    midVert[1].style.transformOrigin = "150px center -100px";
+
+    //bottom-left-corner
+    midVert[2].style.transformOrigin = "150px -50px -100px";
+
+    //top-middle-edge
+    midVert[3].style.transformOrigin = "center 150px -100px";
+
+    //bottom-middle-edge
+    midVert[5].style.transformOrigin = "center -50px -100px";
+
+    //top-right-corner
+    midVert[6].style.transformOrigin = "-50px 150px -100px";
+
+    //right-middle-edge
+    midVert[7].style.transformOrigin = "-50px center -100px";
+
+    //bottom-right-corner
+    midVert[8].style.transformOrigin = "-50px -50px -100px";
+    
+    //adds spinning animation dependent the side being turned
+    if (midVertDegree == 0) {
+        for (let i = 0; i < midVert.length; i++) {
+            midVert[i].classList.add("spin90-z-axis");
+        }
+    } else if (midVertDegree == 90) {
+        for (let i = 0; i < midVert.length; i++) {
+            midVert[i].classList.add("spin180-z-axis");
+        }
+    } else if (midVertDegree == 180) {
+        for (let i = 0; i < midVert.length; i++) {
+            midVert[i].classList.add("spin270-z-axis");
+        }
+    } else if (midVertDegree == 270) {
+        for (let i = 0; i < midVert.length; i++) {
+            midVert[i].classList.add("spin360-z-axis");
+        }
     }
-    let keyframesTiming = {
-        duration: 500,
-        iterations: 1,
-    }
-    midVert.animate(transformations, keyframesTiming);
+
+    //waits for animation to play before spinning the individuals cubes
     setTimeout(()=>{
-        midVert.style.transform = "rotate3d(0,0,1, " +(midVertDegree)+ "deg)";
-        midVert.style.transform = "rotate3d(0,0,1, " +(midVertDegree+90)+ "deg)";
-        midVertDegree += 90;
+        for (let i = 0; i < midVert.length; i++) {
+            midVert[i].classList.remove("spin90-z-axis");
+            midVert[i].classList.remove("spin180-z-axis");
+            midVert[i].classList.remove("spin270-z-axis");
+            midVert[i].classList.remove("spin360-z-axis");
+            midVert[i].style.transformOrigin = "center";
+        }
+        for (let i = 0; i < midVert.length; i++) {
+            midVert[i].style.transform = "rotate3d(0,0,1, " +(midVertDegree)+ "deg)";
+            midVert[i].style.transform = "rotate3d(0,0,1, " +(midVertDegree+90)+ "deg)";
+        }
+        if (midVertDegree == 270) {
+            midVertDegree = 0;
+        } else {
+            midVertDegree += 90;
+        }
     }, 500)
 };
 
 function rotateBack() {
-    let back = document.querySelector(".side-back");
-    let transformations = {
-        transform: "rotate3d(0,0,1, " +(backDegree)+ "deg) translate3d(0,0,-100px)",
-        transform: "rotate3d(0,0,1, " +(backDegree+90)+ "deg) translate3d(0,0,-100px)",
+    let back = document.querySelectorAll(".back-side");
+    //top-left-corner
+    back[0].style.transformOrigin = "150px 150px -100px";
+
+    //left-middle-edge
+    back[1].style.transformOrigin = "150px center -100px";
+
+    //bottom-left-corner
+    back[2].style.transformOrigin = "150px -50px -100px";
+
+    //top-middle-edge
+    back[3].style.transformOrigin = "center 150px -100px";
+
+    //bottom-middle-edge
+    back[5].style.transformOrigin = "center -50px -100px";
+
+    //top-right-corner
+    back[6].style.transformOrigin = "-50px 150px -100px";
+
+    //right-middle-edge
+    back[7].style.transformOrigin = "-50px center -100px";
+
+    //bottom-right-corner
+    back[8].style.transformOrigin = "-50px -50px -100px";
+    
+    //adds spinning animation dependent the side being turned
+    if (backDegree == 0) {
+        for (let i = 0; i < back.length; i++) {
+            back[i].classList.add("spin90-z-axis");
+        }
+    } else if (backDegree == 90) {
+        for (let i = 0; i < back.length; i++) {
+            back[i].classList.add("spin180-z-axis");
+        }
+    } else if (backDegree == 180) {
+        for (let i = 0; i < back.length; i++) {
+            back[i].classList.add("spin270-z-axis");
+        }
+    } else if (backDegree == 270) {
+        for (let i = 0; i < back.length; i++) {
+            back[i].classList.add("spin360-z-axis");
+        }
     }
-    let keyframesTiming = {
-        duration: 500,
-        iterations: 1,
-    }
-    back.animate(transformations, keyframesTiming);
+
+    //waits for animation to play before spinning the individuals cubes
     setTimeout(()=>{
-        back.style.transform = "rotate3d(0,0,1, " +(backDegree)+ "deg) translate3d(0,0,-100px)";
-        back.style.transform = "rotate3d(0,0,1, " +(backDegree+90)+ "deg) translate3d(0,0,-100px)";
-        backDegree += 90;
+        for (let i = 0; i < back.length; i++) {
+            back[i].classList.remove("spin90-z-axis");
+            back[i].classList.remove("spin180-z-axis");
+            back[i].classList.remove("spin270-z-axis");
+            back[i].classList.remove("spin360-z-axis");
+            back[i].style.transformOrigin = "center";
+        }
+        for (let i = 0; i < back.length; i++) {
+            back[i].style.transform = "rotate3d(0,0,1, " +(backDegree)+ "deg)";
+            back[i].style.transform = "rotate3d(0,0,1, " +(backDegree+90)+ "deg)";
+        }
+        if (backDegree == 270) {
+            backDegree = 0;
+        } else {
+            backDegree += 90;
+        }
     }, 500)
 };
 
@@ -487,16 +634,17 @@ function rotateRightSide() {
     }, 500)
 };
 
-// rotateTop();
+// rotateMiddleVertical();
+// rotateLeftSide()
 // rotateFront();
 // setInterval(rotateTop, 1000);
 // setInterval(rotateMiddleHorizontal, 1000);
 // setInterval(rotateBottom, 1000);
-// setInterval(rotateFront, 1500);
-// setInterval(rotateMiddleVertical, 1000);
-// setInterval(rotateBack, 1000);
-setInterval(rotateLeftSide, 1000);
-setInterval(rotateMiddleVertical2, 1000);
-setInterval(rotateRightSide, 1000);
+// setInterval(rotateFront, 1000);
+setInterval(rotateMiddleVertical, 1000);
+setInterval(rotateBack, 1000);
+// setInterval(rotateLeftSide, 1000);
+// setInterval(rotateMiddleVertical2, 1000);
+// setInterval(rotateRightSide, 1000);
 
 
