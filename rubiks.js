@@ -1,648 +1,637 @@
-let red = [];
-let yellow = [];
-let blue = [];
-let green = [];
-let white = [];
-let orange = [];
+import {Quaternion} from './quaternion.js';
 
-let frontDegree = 0;
-let midVertDegree = 0;
-let backDegree = 0;
-let leftSideDegree = 0;
-let midVert2Degree = 0;
-let rightSideDegree = 0;
-let topDegree = 0;
-let midHorDegree = 0;
-let bottomDegree = 0;
+let cubes = [];
+for (let i = 0; i < 27; i++) {
+    cubes[i] = new Quaternion(0,0,0,0);
+    cubes[i].toQuaternion();
+}
 
-
-function rotateFront() { 
+function rotateFront() {
     let front = document.querySelectorAll(".front-side");
-    
-    //top-left-corner
-    front[0].style.transformOrigin = "150px 150px 0px";
 
-    //left-middle-edge
-    front[1].style.transformOrigin = "150px center 0px";
+    let frontGrid = [front[0], front[3], front[6],  // 18 19 20
+                     front[1], front[4], front[7],  // 21 22 23
+                     front[2], front[5], front[8]]; // 24 25 26
 
-    //bottom-left-corner
-    front[2].style.transformOrigin = "150px -50px 0px";
+    let corners = [cubes[18], cubes[24], cubes[26], cubes[20]];
+    let edges = [cubes[19], cubes[21], cubes[25], cubes[23]]; 
 
-    //top-middle-edge
-    front[3].style.transformOrigin = "center 150px 0px";
+    let q2 = new Quaternion(90,0,0,1);
+    q2.toQuaternion(); 
 
-    //bottom-middle-edge
-    front[5].style.transformOrigin = "center -50px 0px";
-
-    //top-right-corner
-    front[6].style.transformOrigin = "-50px 150px 0px";
-
-    //right-middle-edge
-    front[7].style.transformOrigin = "-50px center 0px";
-
-    //bottom-right-corner
-    front[8].style.transformOrigin = "-50px -50px 0px";
-    
-    //adds spinning animation dependent the side being turned
-    if (frontDegree == 0) {
-        for (let i = 0; i < front.length; i++) {
-            front[i].classList.add("spin90-z-axis");
-        }
-    } else if (frontDegree == 90) {
-        for (let i = 0; i < front.length; i++) {
-            front[i].classList.add("spin180-z-axis");
-        }
-    } else if (frontDegree == 180) {
-        for (let i = 0; i < front.length; i++) {
-            front[i].classList.add("spin270-z-axis");
-        }
-    } else if (frontDegree == 270) {
-        for (let i = 0; i < front.length; i++) {
-            front[i].classList.add("spin360-z-axis");
-        }
+    for (let i = 18; i < 27; i++) {
+        cubes[i].multiply(q2);
     }
 
-    //waits for animation to play before spinning the individuals cubes
-    setTimeout(()=>{
-        for (let i = 0; i < front.length; i++) {
-            front[i].classList.remove("spin90-z-axis");
-            front[i].classList.remove("spin180-z-axis");
-            front[i].classList.remove("spin270-z-axis");
-            front[i].classList.remove("spin360-z-axis");
-            front[i].style.transformOrigin = "center";
-        }
-        for (let i = 0; i < front.length; i++) {
-            front[i].style.transform = "rotate3d(0,0,1, " +(frontDegree)+ "deg)";
-            front[i].style.transform = "rotate3d(0,0,1, " +(frontDegree+90)+ "deg)";
-        }
-        if (frontDegree == 270) {
-            frontDegree = 0;
-        } else {
-            frontDegree += 90;
-        }
-    }, 500)
+    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+    for (let i = 0; i < 3; i++) {
+        corners[i].update(corners[i+1]);
+    }
+    corners[3].update(temp);
+
+    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+    for (let i = 0; i < 3; i++) {
+       edges[i].update(edges[i+1]);
+    }
+    edges[3].update(temp2);
+
+    let index = 18;
+    for (let i = 0; i < 9; i++) {
+        cubes[index].toAxisAngle();
+        frontGrid[i].style.transform = `rotate3d(${cubes[index].x}, ${cubes[index].y}, ${cubes[index].z}, ${cubes[index].w}deg)`;
+        cubes[index].toQuaternion();
+        index++;
+    }
+
+    //top-left-corner
+    // front[0].style.transformOrigin = "150px 150px 0px";
+
+    // //left-middle-edge
+    // front[1].style.transformOrigin = "150px center 0px";
+
+    // //bottom-left-corner
+    // front[2].style.transformOrigin = "150px -50px 0px";
+
+    // //top-middle-edge
+    // front[3].style.transformOrigin = "center 150px 0px";
+
+    // //bottom-middle-edge
+    // front[5].style.transformOrigin = "center -50px 0px";
+
+    // //top-right-corner
+    // front[6].style.transformOrigin = "-50px 150px 0px";
+
+    // //right-middle-edge
+    // front[7].style.transformOrigin = "-50px center 0px";
+
+    // //bottom-right-corner
+    // front[8].style.transformOrigin = "-50px -50px 0px";
+ 
 };
 
 function rotateMiddleVertical() {
     let midVert = document.querySelectorAll(".middle-side");
-    //top-left-corner
-    midVert[0].style.transformOrigin = "150px 150px -100px";
-
-    //left-middle-edge
-    midVert[1].style.transformOrigin = "150px center -100px";
-
-    //bottom-left-corner
-    midVert[2].style.transformOrigin = "150px -50px -100px";
-
-    //top-middle-edge
-    midVert[3].style.transformOrigin = "center 150px -100px";
-
-    //bottom-middle-edge
-    midVert[5].style.transformOrigin = "center -50px -100px";
-
-    //top-right-corner
-    midVert[6].style.transformOrigin = "-50px 150px -100px";
-
-    //right-middle-edge
-    midVert[7].style.transformOrigin = "-50px center -100px";
-
-    //bottom-right-corner
-    midVert[8].style.transformOrigin = "-50px -50px -100px";
     
-    //adds spinning animation dependent the side being turned
-    if (midVertDegree == 0) {
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.add("spin90-z-axis");
-        }
-    } else if (midVertDegree == 90) {
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.add("spin180-z-axis");
-        }
-    } else if (midVertDegree == 180) {
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.add("spin270-z-axis");
-        }
-    } else if (midVertDegree == 270) {
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.add("spin360-z-axis");
-        }
+    let midVertGrid = [midVert[0], midVert[3], midVert[6],  // 9 10 11
+                       midVert[1], midVert[4], midVert[7],  // 12 13 14
+                       midVert[2], midVert[5], midVert[8]]; // 15 16 17
+
+    let corners = [cubes[9], cubes[15], cubes[17], cubes[11]];
+    let edges = [cubes[10], cubes[12], cubes[16], cubes[14]]; 
+
+    let q2 = new Quaternion(90,0,0,1);
+    q2.toQuaternion(); 
+
+    for (let i = 9; i < 18; i++) {
+        cubes[i].multiply(q2);
     }
 
-    //waits for animation to play before spinning the individuals cubes
-    setTimeout(()=>{
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.remove("spin90-z-axis");
-            midVert[i].classList.remove("spin180-z-axis");
-            midVert[i].classList.remove("spin270-z-axis");
-            midVert[i].classList.remove("spin360-z-axis");
-            midVert[i].style.transformOrigin = "center";
-        }
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].style.transform = "rotate3d(0,0,1, " +(midVertDegree)+ "deg)";
-            midVert[i].style.transform = "rotate3d(0,0,1, " +(midVertDegree+90)+ "deg)";
-        }
-        if (midVertDegree == 270) {
-            midVertDegree = 0;
-        } else {
-            midVertDegree += 90;
-        }
-    }, 500)
+    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+    for (let i = 0; i < 3; i++) {
+        corners[i].update(corners[i+1]);
+    }
+    corners[3].update(temp);
+
+    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+    for (let i = 0; i < 3; i++) {
+       edges[i].update(edges[i+1]);
+    }
+    edges[3].update(temp2);
+
+    let index = 9;
+    for (let i = 0; i < 9; i++) {
+        cubes[index].toAxisAngle();
+        midVertGrid[i].style.transform = `rotate3d(${cubes[index].x}, ${cubes[index].y}, ${cubes[index].z}, ${cubes[index].w}deg)`;
+        cubes[index].toQuaternion();
+        index++;
+    }
+
+    // //top-left-corner
+    // midVert[0].style.transformOrigin = "150px 150px -100px";
+
+    // //left-middle-edge
+    // midVert[1].style.transformOrigin = "150px center -100px";
+
+    // //bottom-left-corner
+    // midVert[2].style.transformOrigin = "150px -50px -100px";
+
+    // //top-middle-edge
+    // midVert[3].style.transformOrigin = "center 150px -100px";
+
+    // //bottom-middle-edge
+    // midVert[5].style.transformOrigin = "center -50px -100px";
+
+    // //top-right-corner
+    // midVert[6].style.transformOrigin = "-50px 150px -100px";
+
+    // //right-middle-edge
+    // midVert[7].style.transformOrigin = "-50px center -100px";
+
+    // //bottom-right-corner
+    // midVert[8].style.transformOrigin = "-50px -50px -100px";
+    
 };
 
 function rotateBack() {
     let back = document.querySelectorAll(".back-side");
-    //top-left-corner
-    back[0].style.transformOrigin = "150px 150px -100px";
 
-    //left-middle-edge
-    back[1].style.transformOrigin = "150px center -100px";
+    let backGrid = [back[0], back[3], back[6],  // 0 1 2
+                    back[1], back[4], back[7],  // 3 4 5
+                    back[2], back[5], back[8]]; // 6 7 8
 
-    //bottom-left-corner
-    back[2].style.transformOrigin = "150px -50px -100px";
+    let corners = [cubes[0], cubes[6], cubes[8], cubes[2]];
+    let edges = [cubes[1], cubes[3], cubes[7], cubes[5]]; 
 
-    //top-middle-edge
-    back[3].style.transformOrigin = "center 150px -100px";
+    let q2 = new Quaternion(90,0,0,1);
+    q2.toQuaternion(); 
 
-    //bottom-middle-edge
-    back[5].style.transformOrigin = "center -50px -100px";
-
-    //top-right-corner
-    back[6].style.transformOrigin = "-50px 150px -100px";
-
-    //right-middle-edge
-    back[7].style.transformOrigin = "-50px center -100px";
-
-    //bottom-right-corner
-    back[8].style.transformOrigin = "-50px -50px -100px";
-    
-    //adds spinning animation dependent the side being turned
-    if (backDegree == 0) {
-        for (let i = 0; i < back.length; i++) {
-            back[i].classList.add("spin90-z-axis");
-        }
-    } else if (backDegree == 90) {
-        for (let i = 0; i < back.length; i++) {
-            back[i].classList.add("spin180-z-axis");
-        }
-    } else if (backDegree == 180) {
-        for (let i = 0; i < back.length; i++) {
-            back[i].classList.add("spin270-z-axis");
-        }
-    } else if (backDegree == 270) {
-        for (let i = 0; i < back.length; i++) {
-            back[i].classList.add("spin360-z-axis");
-        }
+    for (let i = 0; i < 9; i++) {
+        cubes[i].multiply(q2);
     }
 
-    //waits for animation to play before spinning the individuals cubes
-    setTimeout(()=>{
-        for (let i = 0; i < back.length; i++) {
-            back[i].classList.remove("spin90-z-axis");
-            back[i].classList.remove("spin180-z-axis");
-            back[i].classList.remove("spin270-z-axis");
-            back[i].classList.remove("spin360-z-axis");
-            back[i].style.transformOrigin = "center";
-        }
-        for (let i = 0; i < back.length; i++) {
-            back[i].style.transform = "rotate3d(0,0,1, " +(backDegree)+ "deg)";
-            back[i].style.transform = "rotate3d(0,0,1, " +(backDegree+90)+ "deg)";
-        }
-        if (backDegree == 270) {
-            backDegree = 0;
-        } else {
-            backDegree += 90;
-        }
-    }, 500)
+    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+    for (let i = 0; i < 3; i++) {
+        corners[i].update(corners[i+1]);
+    }
+    corners[3].update(temp);
+
+    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+    for (let i = 0; i < 3; i++) {
+       edges[i].update(edges[i+1]);
+    }
+    edges[3].update(temp2);
+
+    for (let i = 0; i < 9; i++) {
+        cubes[i].toAxisAngle();
+        backGrid[i].style.transform = `rotate3d(${cubes[i].x}, ${cubes[i].y}, ${cubes[i].z}, ${cubes[i].w}deg)`;
+        cubes[i].toQuaternion();
+    }
+
+    // //top-left-corner
+    // back[0].style.transformOrigin = "150px 150px -100px";
+
+    // //left-middle-edge
+    // back[1].style.transformOrigin = "150px center -100px";
+
+    // //bottom-left-corner
+    // back[2].style.transformOrigin = "150px -50px -100px";
+
+    // //top-middle-edge
+    // back[3].style.transformOrigin = "center 150px -100px";
+
+    // //bottom-middle-edge
+    // back[5].style.transformOrigin = "center -50px -100px";
+
+    // //top-right-corner
+    // back[6].style.transformOrigin = "-50px 150px -100px";
+
+    // //right-middle-edge
+    // back[7].style.transformOrigin = "-50px center -100px";
+
+    // //bottom-right-corner
+    // back[8].style.transformOrigin = "-50px -50px -100px";
+    
 };
 
 function rotateTop() {
     let top = document.querySelectorAll(".top-layer");
 
-    //side-front
-    //leftCornerPos
-    top[0].style.transformOrigin = "150px center -100px";
+    let topGrid = [top[6], top[7], top[8],  // 0 1 2
+                   top[3], top[4], top[5],  // 9 10 11
+                   top[0], top[1], top[2]]; // 18 19 20
 
-    //middleEdgePos
-    top[1].style.transformOrigin = "center center -100px";
+    let corners = [cubes[0], cubes[2], cubes[20], cubes[18]];
+    let edges = [cubes[1], cubes[11], cubes[19], cubes[9]];
 
-    //rightCornerPos
-    top[2].style.transformOrigin = "-50px center -100px";
+    let index = [0,1,2,9,10,11,18,19,20];
 
-    //side-middle
-    //leftEdge
-    top[3].style.transformOrigin = "150px center 0px";
+    let q2 = new Quaternion(90,0,1,0);
+    q2.toQuaternion();
 
-    //rightEdge
-    top[5].style.transformOrigin = "-50px center 0px";
-
-    //side-back
-    //leftCornerNeg
-    top[6].style.transformOrigin = "150px center 100px";
-
-    //middleEdgeNeg
-    top[7].style.transformOrigin = "center center 100px";
-
-    //rightCornerNeg
-    top[8].style.transformOrigin = "-50px center 100px";
-    
-    //adds spinning animation dependent the side being turned
-    if (topDegree == 0) {
-        for (let i = 0; i < top.length; i++) {
-            top[i].classList.add("spin90-y-axis");
-        }
-    } else if (topDegree == 90) {
-        for (let i = 0; i < top.length; i++) {
-            top[i].classList.add("spin180-y-axis");
-        }
-    } else if (topDegree == 180) {
-        for (let i = 0; i < top.length; i++) {
-            top[i].classList.add("spin270-y-axis");
-        }
-    } else if (topDegree == 270) {
-        for (let i = 0; i < top.length; i++) {
-            top[i].classList.add("spin360-y-axis");
-        }
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].multiply(q2);
     }
 
-    //waits for animation to play before spinning the individuals cubes
-    setTimeout(()=>{
-        for (let i = 0; i < top.length; i++) {
-            top[i].classList.remove("spin90-y-axis");
-            top[i].classList.remove("spin180-y-axis");
-            top[i].classList.remove("spin270-y-axis");
-            top[i].classList.remove("spin360-y-axis");
-            top[i].style.transformOrigin = "center";
-        }
-        for (let i = 0; i < top.length; i++) {
-            top[i].style.transform = "rotate3d(0,1,0, " +(topDegree)+ "deg)";
-            top[i].style.transform = "rotate3d(0,1,0, " +(topDegree+90)+ "deg)";
-        }
-        if (topDegree == 270) {
-            topDegree = 0;
-        } else {
-            topDegree += 90;
-        }
-    }, 500)
+    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+    for (let i = 0; i < 3; i++) {
+        corners[i].update(corners[i+1]);
+    }
+    corners[3].update(temp);
+
+    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+    for (let i = 0; i < 3; i++) {
+       edges[i].update(edges[i+1]);
+    }
+    edges[3].update(temp2);
+    
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].toAxisAngle();
+        topGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+        cubes[index[i]].toQuaternion();
+    }
+
+    //side-front
+    //leftCornerPos
+    // top[0].style.transformOrigin = "150px center -100px";
+
+    // //middleEdgePos
+    // top[1].style.transformOrigin = "center center -100px";
+
+    // //rightCornerPos
+    // top[2].style.transformOrigin = "-50px center -100px";
+
+    // //side-middle
+    // //leftEdge
+    // top[3].style.transformOrigin = "150px center 0px";
+
+    // //rightEdge
+    // top[5].style.transformOrigin = "-50px center 0px";
+
+    // //side-back
+    // //leftCornerNeg
+    // top[6].style.transformOrigin = "150px center 100px";
+
+    // //middleEdgeNeg
+    // top[7].style.transformOrigin = "center center 100px";
+
+    // //rightCornerNeg
+    // top[8].style.transformOrigin = "-50px center 100px";
 };
 
 function rotateMiddleHorizontal() {
-    let midHor = document.querySelectorAll(".mid-layer");
+    let midHor = document.getElementsByClassName("mid-layer");
 
-    //side-front
-    //leftCornerPos
-    midHor[0].style.transformOrigin = "150px center -100px";
+    let midHorGrid = [midHor[6], midHor[7], midHor[8],  // 3 4 5
+                      midHor[3], midHor[4], midHor[5],  // 12 13 14
+                      midHor[0], midHor[1], midHor[2]]; // 21 22 23
 
-    //middleEdgePos
-    midHor[1].style.transformOrigin = "center center -100px";
+    let corners = [cubes[3], cubes[5], cubes[23], cubes[21]];
+    let edges = [cubes[4], cubes[14], cubes[22], cubes[12]];
 
-    //rightCornerPos
-    midHor[2].style.transformOrigin = "-50px center -100px";
+    let index = [3,4,5,12,13,14,21,22,23];
 
-    //side-middle
-    //leftEdge
-    midHor[3].style.transformOrigin = "150px center 0px";
+    let q2 = new Quaternion(90,0,1,0);
+    q2.toQuaternion();
 
-    //rightEdge
-    midHor[5].style.transformOrigin = "-50px center 0px";
-
-    //side-back
-    //leftCornerNeg
-    midHor[6].style.transformOrigin = "150px center 100px";
-
-    //middleEdgeNeg
-    midHor[7].style.transformOrigin = "center center 100px";
-
-    //rightCornerNeg
-    midHor[8].style.transformOrigin = "-50px center 100px";
-    
-    //adds spinning animation dependent the side being turned
-    if (midHorDegree == 0) {
-        for (let i = 0; i < midHor.length; i++) {
-            midHor[i].classList.add("spin90-y-axis");
-        }
-    } else if (midHorDegree == 90) {
-        for (let i = 0; i < midHor.length; i++) {
-            midHor[i].classList.add("spin180-y-axis");
-        }
-    } else if (midHorDegree == 180) {
-        for (let i = 0; i < midHor.length; i++) {
-            midHor[i].classList.add("spin270-y-axis");
-        }
-    } else if (midHorDegree == 270) {
-        for (let i = 0; i < midHor.length; i++) {
-            midHor[i].classList.add("spin360-y-axis");
-        }
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].multiply(q2);
     }
 
-    //waits for animation to play before spinning the individuals cubes
-    setTimeout(()=>{
-        for (let i = 0; i < midHor.length; i++) {
-            midHor[i].classList.remove("spin90-y-axis");
-            midHor[i].classList.remove("spin180-y-axis");
-            midHor[i].classList.remove("spin270-y-axis");
-            midHor[i].classList.remove("spin360-y-axis");
-            midHor[i].style.transformOrigin = "center";
-        }
-        for (let i = 0; i < midHor.length; i++) {
-            midHor[i].style.transform = "rotate3d(0,1,0, " +(midHorDegree)+ "deg)";
-            midHor[i].style.transform = "rotate3d(0,1,0, " +(midHorDegree+90)+ "deg)";
-        }
-        if (midHorDegree == 270) {
-            midHorDegree = 0;
-        } else {
-            midHorDegree += 90;
-        }
-    }, 500)
+    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+    for (let i = 0; i < 3; i++) {
+        corners[i].update(corners[i+1]);
+    }
+    corners[3].update(temp);
+
+    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+    for (let i = 0; i < 3; i++) {
+       edges[i].update(edges[i+1]);
+    }
+    edges[3].update(temp2);
+    
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].toAxisAngle();
+        midHorGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+        cubes[index[i]].toQuaternion();
+    }
+    //side-front
+    //leftCornerPos
+    // midHor[0].style.transformOrigin = "150px center -100px";
+
+    // //middleEdgePos
+    // midHor[1].style.transformOrigin = "center center -100px";
+
+    // //rightCornerPos
+    // midHor[2].style.transformOrigin = "-50px center -100px";
+
+    // //side-middle
+    // //leftEdge
+    // midHor[3].style.transformOrigin = "150px center 0px";
+
+    // //rightEdge
+    // midHor[5].style.transformOrigin = "-50px center 0px";
+
+    // //side-back
+    // //leftCornerNeg
+    // midHor[6].style.transformOrigin = "150px center 100px";
+
+    // //middleEdgeNeg
+    // midHor[7].style.transformOrigin = "center center 100px";
+
+    // //rightCornerNeg
+    // midHor[8].style.transformOrigin = "-50px center 100px";
 };
 
 function rotateBottom() {
     let bottom = document.querySelectorAll(".bottom-layer");
 
-    //side-front
-    //leftCornerPos
-    bottom[0].style.transformOrigin = "150px center -100px";
+    let bottomGrid = [bottom[6], bottom[7], bottom[8],  // 6 7 8
+                      bottom[3], bottom[4], bottom[5],  // 15 16 17
+                      bottom[0], bottom[1], bottom[2]]; // 24 25 26
 
-    //middleEdgePos
-    bottom[1].style.transformOrigin = "center center -100px";
+    let corners = [cubes[6], cubes[8], cubes[26], cubes[24]];
+    let edges = [cubes[7], cubes[17], cubes[25], cubes[15]];
 
-    //rightCornerPos
-    bottom[2].style.transformOrigin = "-50px center -100px";
+    let index = [6,7,8,15,16,17,24,25,26];
 
-    //side-middle
-    //leftEdge
-    bottom[3].style.transformOrigin = "150px center 0px";
+    let q2 = new Quaternion(90,0,1,0);
+    q2.toQuaternion();
 
-    //rightEdge
-    bottom[5].style.transformOrigin = "-50px center 0px";
-
-    //side-back
-    //leftCornerNeg
-    bottom[6].style.transformOrigin = "150px center 100px";
-
-    //middleEdgeNeg
-    bottom[7].style.transformOrigin = "center center 100px";
-
-    //rightCornerNeg
-    bottom[8].style.transformOrigin = "-50px center 100px";
-
-    //adds spinning animation dependent the side being turned
-    if (bottomDegree == 0) {
-        for (let i = 0; i < bottom.length; i++) {
-            bottom[i].classList.add("spin90-y-axis");
-        }
-    } else if (bottomDegree == 90) {
-        for (let i = 0; i < bottom.length; i++) {
-            bottom[i].classList.add("spin180-y-axis");
-        }
-    } else if (bottomDegree == 180) {
-        for (let i = 0; i < bottom.length; i++) {
-            bottom[i].classList.add("spin270-y-axis");
-        }
-    } else if (bottomDegree == 270) {
-        for (let i = 0; i < bottom.length; i++) {
-            bottom[i].classList.add("spin360-y-axis");
-        }
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].multiply(q2);
     }
 
-    //waits for animation to play before spinning the individuals cubes
-    setTimeout(()=>{
-        for (let i = 0; i < bottom.length; i++) {
-            bottom[i].classList.remove("spin90-y-axis");
-            bottom[i].classList.remove("spin180-y-axis");
-            bottom[i].classList.remove("spin270-y-axis");
-            bottom[i].classList.remove("spin360-y-axis");
-            bottom[i].style.transformOrigin = "center";
-        }
-        for (let i = 0; i < bottom.length; i++) {
-            bottom[i].style.transform = "rotate3d(0,1,0, " +(bottomDegree)+ "deg)";
-            bottom[i].style.transform = "rotate3d(0,1,0, " +(bottomDegree+90)+ "deg)";
-        }
-        if (bottomDegree == 270) {
-            bottomDegree = 0;
-        } else {
-            bottomDegree += 90;
-        }
-    }, 500)
+    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+    for (let i = 0; i < 3; i++) {
+        corners[i].update(corners[i+1]);
+    }
+    corners[3].update(temp);
+
+    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+    for (let i = 0; i < 3; i++) {
+       edges[i].update(edges[i+1]);
+    }
+    edges[3].update(temp2);
+    
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].toAxisAngle();
+        bottomGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+        cubes[index[i]].toQuaternion();
+    }
+
+    // //side-front
+    // //leftCornerPos
+    // bottom[0].style.transformOrigin = "150px center -100px";
+
+    // //middleEdgePos
+    // bottom[1].style.transformOrigin = "center center -100px";
+
+    // //rightCornerPos
+    // bottom[2].style.transformOrigin = "-50px center -100px";
+
+    // //side-middle
+    // //leftEdge
+    // bottom[3].style.transformOrigin = "150px center 0px";
+
+    // //rightEdge
+    // bottom[5].style.transformOrigin = "-50px center 0px";
+
+    // //side-back
+    // //leftCornerNeg
+    // bottom[6].style.transformOrigin = "150px center 100px";
+
+    // //middleEdgeNeg
+    // bottom[7].style.transformOrigin = "center center 100px";
+
+    // //rightCornerNeg
+    // bottom[8].style.transformOrigin = "-50px center 100px";
 };
 
 function rotateLeftSide() {
     let leftSide = document.querySelectorAll(".left-side");
 
-    //side-front
-    //top corner postive z
-    leftSide[0].style.transformOrigin = "center 150px -100px";
+    let leftSideGrid = [leftSide[0], leftSide[3], leftSide[6],  // 18 9 0
+                        leftSide[1], leftSide[4], leftSide[7],  // 21 12 3
+                        leftSide[2], leftSide[5], leftSide[8]]; // 24 15 6
 
-    //edge positive z
-    leftSide[1].style.transformOrigin = "center center -100px";
+    let corners = [cubes[18], cubes[24], cubes[6], cubes[0]];
+    let edges = [cubes[9], cubes[21], cubes[15], cubes[3]];
 
-    //bottom corner positive z
-    leftSide[2].style.transformOrigin = "center -50px -100px";
+    let index = [18,9,0,21,12,3,24,15,6];
 
-    //side-middle
-    //top edge
-    leftSide[3].style.transformOrigin = "center 150px 0px";
+    let q2 = new Quaternion(90,1,0,0);
+    q2.toQuaternion();
 
-    //bottom edge
-    leftSide[5].style.transformOrigin = "center -50px 0px";
-
-    //side-back
-    //top corner negative z
-    leftSide[6].style.transformOrigin = "center 150px 100px";
-
-    //edge negative z
-    leftSide[7].style.transformOrigin = "center center 100px";
-
-    //bottom corner negative z
-    leftSide[8].style.transformOrigin = "center -50px 100px";
-
-    //adds spinning animation dependent the side being turned
-    if (leftSideDegree == 0) {
-        for (let i = 0; i < leftSide.length; i++) {
-            leftSide[i].classList.add("spin90-x-axis");
-        }
-    } else if (leftSideDegree == 90) {
-        for (let i = 0; i < leftSide.length; i++) {
-            leftSide[i].classList.add("spin180-x-axis");
-        }
-    } else if (leftSideDegree == 180) {
-        for (let i = 0; i < leftSide.length; i++) {
-            leftSide[i].classList.add("spin270-x-axis");
-        }
-    } else if (leftSideDegree == 270) {
-        for (let i = 0; i < leftSide.length; i++) {
-            leftSide[i].classList.add("spin360-x-axis");
-        }
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].multiply(q2);
     }
 
-    //waits for animation to play before spinning the individuals cubes
-    setTimeout(()=>{
-        for (let i = 0; i < leftSide.length; i++) {
-            leftSide[i].classList.remove("spin90-x-axis");
-            leftSide[i].classList.remove("spin180-x-axis");
-            leftSide[i].classList.remove("spin270-x-axis");
-            leftSide[i].classList.remove("spin360-x-axis");
-            leftSide[i].style.transformOrigin = "center";
-        }
-        for (let i = 0; i < leftSide.length; i++) {
-            leftSide[i].style.transform = "rotate3d(1,0,0, " +(leftSideDegree)+ "deg)";
-            leftSide[i].style.transform = "rotate3d(1,0,0, " +(leftSideDegree+90)+ "deg)";
-        }
-        if (leftSideDegree == 270) {
-            leftSideDegree = 0;
-        } else {
-            leftSideDegree += 90;
-        }
-    }, 500)
-}
+    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+    for (let i = 0; i < 3; i++) {
+        corners[i].update(corners[i+1]);
+    }
+    corners[3].update(temp);
+
+    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+    for (let i = 0; i < 3; i++) {
+       edges[i].update(edges[i+1]);
+    }
+    edges[3].update(temp2);
+    
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].toAxisAngle();
+        leftSideGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+        cubes[index[i]].toQuaternion();
+    }
+    // //side-front
+    // //top corner postive z
+    // leftSide[0].style.transformOrigin = "center 150px -100px";
+
+    // //edge positive z
+    // leftSide[1].style.transformOrigin = "center center -100px";
+
+    // //bottom corner positive z
+    // leftSide[2].style.transformOrigin = "center -50px -100px";
+
+    // //side-middle
+    // //top edge
+    // leftSide[3].style.transformOrigin = "center 150px 0px";
+
+    // //bottom edge
+    // leftSide[5].style.transformOrigin = "center -50px 0px";
+
+    // //side-back
+    // //top corner negative z
+    // leftSide[6].style.transformOrigin = "center 150px 100px";
+
+    // //edge negative z
+    // leftSide[7].style.transformOrigin = "center center 100px";
+
+    // //bottom corner negative z
+    // leftSide[8].style.transformOrigin = "center -50px 100px";
+};
 
 function rotateMiddleVertical2() {
     let midVert = document.querySelectorAll(".middleVert");
-    //side-front
-    //top corner postive z
-    midVert[0].style.transformOrigin = "center 150px -100px";
 
-    //edge positive z
-    midVert[1].style.transformOrigin = "center center -100px";
+    let midVertGrid = [midVert[0], midVert[3], midVert[6],  // 19 10 1
+                       midVert[1], midVert[4], midVert[7],  // 22 13 4
+                       midVert[2], midVert[5], midVert[8]]; // 25 16 7
 
-    //bottom corner positive z
-    midVert[2].style.transformOrigin = "center -50px -100px";
+    let corners = [cubes[19], cubes[25], cubes[7], cubes[1]];
+    let edges = [cubes[10], cubes[22], cubes[16], cubes[4]];
 
-    //side-middle
-    //top edge
-    midVert[3].style.transformOrigin = "center 150px 0px";
+    let index = [19,10,1,22,13,4,25,16,7];
 
-    //bottom edge
-    midVert[5].style.transformOrigin = "center -50px 0px";
+    let q2 = new Quaternion(90,1,0,0);
+    q2.toQuaternion();
 
-    //side-back
-    //top corner negative z
-    midVert[6].style.transformOrigin = "center 150px 100px";
-
-    //edge negative z
-    midVert[7].style.transformOrigin = "center center 100px";
-
-    //bottom corner negative z
-    midVert[8].style.transformOrigin = "center -50px 100px";
-
-    //adds spinning animation dependent the side being turned
-    if (midVertDegree == 0) {
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.add("spin90-x-axis");
-        }
-    } else if (midVertDegree == 90) {
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.add("spin180-x-axis");
-        }
-    } else if (midVertDegree == 180) {
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.add("spin270-x-axis");
-        }
-    } else if (midVertDegree == 270) {
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.add("spin360-x-axis");
-        }
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].multiply(q2);
     }
 
-    //waits for animation to play before spinning the individuals cubes
-    setTimeout(()=>{
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].classList.remove("spin90-x-axis");
-            midVert[i].classList.remove("spin180-x-axis");
-            midVert[i].classList.remove("spin270-x-axis");
-            midVert[i].classList.remove("spin360-x-axis");
-            midVert[i].style.transformOrigin = "center";
-        }
-        for (let i = 0; i < midVert.length; i++) {
-            midVert[i].style.transform = "rotate3d(1,0,0, " +(midVertDegree)+ "deg)";
-            midVert[i].style.transform = "rotate3d(1,0,0, " +(midVertDegree+90)+ "deg)";
-        }
-        if (midVertDegree == 270) {
-            midVertDegree = 0;
-        } else {
-            midVertDegree += 90;
-        }
-    }, 500)
+    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+    for (let i = 0; i < 3; i++) {
+        corners[i].update(corners[i+1]);
+    }
+    corners[3].update(temp);
+
+    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+    for (let i = 0; i < 3; i++) {
+       edges[i].update(edges[i+1]);
+    }
+    edges[3].update(temp2);
+    
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].toAxisAngle();
+        midVertGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+        cubes[index[i]].toQuaternion();
+    }
+    
+    // //side-front
+    // //top corner postive z
+    // midVert[0].style.transformOrigin = "center 150px -100px";
+
+    // //edge positive z
+    // midVert[1].style.transformOrigin = "center center -100px";
+
+    // //bottom corner positive z
+    // midVert[2].style.transformOrigin = "center -50px -100px";
+
+    // //side-middle
+    // //top edge
+    // midVert[3].style.transformOrigin = "center 150px 0px";
+
+    // //bottom edge
+    // midVert[5].style.transformOrigin = "center -50px 0px";
+
+    // //side-back
+    // //top corner negative z
+    // midVert[6].style.transformOrigin = "center 150px 100px";
+
+    // //edge negative z
+    // midVert[7].style.transformOrigin = "center center 100px";
+
+    // //bottom corner negative z
+    // midVert[8].style.transformOrigin = "center -50px 100px";
 };
 
 function rotateRightSide() {
     let rightSide = document.querySelectorAll(".right-side");
 
-    //side-front
-    //top corner postive z
-    rightSide[0].style.transformOrigin = "center 150px -100px";
+    let rightSideGrid = [rightSide[0], rightSide[3], rightSide[6],  // 20 11 2
+                         rightSide[1], rightSide[4], rightSide[7],  // 23 14 5
+                         rightSide[2], rightSide[5], rightSide[8]]; // 26 17 8
 
-    //edge positive z
-    rightSide[1].style.transformOrigin = "center center -100px";
+    let corners = [cubes[20], cubes[26], cubes[8], cubes[2]];
+    let edges = [cubes[11], cubes[23], cubes[17], cubes[5]];
 
-    //bottom corner positive z
-    rightSide[2].style.transformOrigin = "center -50px -100px";
+    let index = [20,11,2,23,14,5,26,17,8];
 
-    //side-middle
-    //top edge
-    rightSide[3].style.transformOrigin = "center 150px 0px";
+    let q2 = new Quaternion(90,1,0,0);
+    q2.toQuaternion();
 
-    //bottom edge
-    rightSide[5].style.transformOrigin = "center -50px 0px";
-
-    //side-back
-    //top corner negative z
-    rightSide[6].style.transformOrigin = "center 150px 100px";
-
-    //edge negative z
-    rightSide[7].style.transformOrigin = "center center 100px";
-
-    //bottom corner negative z
-    rightSide[8].style.transformOrigin = "center -50px 100px";
-
-    //adds spinning animation dependent the side being turned
-    if (rightSideDegree == 0) {
-        for (let i = 0; i < rightSide.length; i++) {
-            rightSide[i].classList.add("spin90-x-axis");
-        }
-    } else if (rightSideDegree == 90) {
-        for (let i = 0; i < rightSide.length; i++) {
-            rightSide[i].classList.add("spin180-x-axis");
-        }
-    } else if (rightSideDegree == 180) {
-        for (let i = 0; i < rightSide.length; i++) {
-            rightSide[i].classList.add("spin270-x-axis");
-        }
-    } else if (rightSideDegree == 270) {
-        for (let i = 0; i < rightSide.length; i++) {
-            rightSide[i].classList.add("spin360-x-axis");
-        }
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].multiply(q2);
     }
 
-    //waits for animation to play before spinning the individuals cubes
-    setTimeout(()=>{
-        for (let i = 0; i < rightSide.length; i++) {
-            rightSide[i].classList.remove("spin90-x-axis");
-            rightSide[i].classList.remove("spin180-x-axis");
-            rightSide[i].classList.remove("spin270-x-axis");
-            rightSide[i].classList.remove("spin360-x-axis");
-            rightSide[i].style.transformOrigin = "center";
-        }
-        for (let i = 0; i < rightSide.length; i++) {
-            rightSide[i].style.transform = "rotate3d(1,0,0, " +(rightSideDegree)+ "deg)";
-            rightSide[i].style.transform = "rotate3d(1,0,0, " +(rightSideDegree+90)+ "deg)";
-        }
-        if (rightSideDegree == 270) {
-            rightSideDegree = 0;
-        } else {
-            rightSideDegree += 90;
-        }
-    }, 500)
+    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+    for (let i = 0; i < 3; i++) {
+        corners[i].update(corners[i+1]);
+    }
+    corners[3].update(temp);
+
+    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+    for (let i = 0; i < 3; i++) {
+       edges[i].update(edges[i+1]);
+    }
+    edges[3].update(temp2);
+    
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].toAxisAngle();
+        rightSideGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+        cubes[index[i]].toQuaternion();
+    }
+
+    // //side-front
+    // //top corner postive z
+    // rightSide[0].style.transformOrigin = "center 150px -100px";
+
+    // //edge positive z
+    // rightSide[1].style.transformOrigin = "center center -100px";
+
+    // //bottom corner positive z
+    // rightSide[2].style.transformOrigin = "center -50px -100px";
+
+    // //side-middle
+    // //top edge
+    // rightSide[3].style.transformOrigin = "center 150px 0px";
+
+    // //bottom edge
+    // rightSide[5].style.transformOrigin = "center -50px 0px";
+
+    // //side-back
+    // //top corner negative z
+    // rightSide[6].style.transformOrigin = "center 150px 100px";
+
+    // //edge negative z
+    // rightSide[7].style.transformOrigin = "center center 100px";
+
+    // //bottom corner negative z
+    // rightSide[8].style.transformOrigin = "center -50px 100px";
+
 };
 
+// function randomRotation() {
+//     let randomNum = Math.floor(Math.random() * 9) + 1;
+
+//     switch(true) {
+//         case(randomNum == 1):
+//             rotateFront();
+//             break;
+//         case(randomNum == 2):
+//             rotateMiddleVertical();
+//             break;
+//         case(randomNum == 3):
+//             rotateBack();
+//             break;
+//         case(randomNum == 4):
+//             rotateTop();
+//             break;
+//         case(randomNum == 5):
+//             rotateMiddleHorizontal();
+//             break;
+//         case(randomNum == 6):
+//             rotateBottom();
+//             break;
+//         case(randomNum == 7):
+//             rotateLeftSide();
+//             break;
+//         case(randomNum == 8):
+//             rotateMiddleVertical2();
+//             break;
+//         case(randomNum == 9):
+//             rotateRightSide();
+//             break;
+//     }
+// };
+
+// setInterval(randomRotation, 50);
+// rotateTop();
+// rotateLeftSide();
+// rotateBottom();
+// rotateRightSide();
+// rotateBack();
 // rotateMiddleVertical();
-// rotateLeftSide()
+// rotateMiddleHorizontal();
+// rotateMiddleVertical2();
 // rotateFront();
 // setInterval(rotateTop, 1000);
 // setInterval(rotateMiddleHorizontal, 1000);
 // setInterval(rotateBottom, 1000);
 // setInterval(rotateFront, 1000);
-setInterval(rotateMiddleVertical, 1000);
-setInterval(rotateBack, 1000);
+// setInterval(rotateMiddleVertical, 1000);
+// setInterval(rotateBack, 1000);
 // setInterval(rotateLeftSide, 1000);
 // setInterval(rotateMiddleVertical2, 1000);
 // setInterval(rotateRightSide, 1000);
