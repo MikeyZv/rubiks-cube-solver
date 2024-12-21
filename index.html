@@ -5,254 +5,286 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link href="rubiks.css" rel="stylesheet"/>
+        <script src="https://kit.fontawesome.com/6d56778525.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <div id="main-container">
-            <div class="whole">
-                <div class="side-front">
-                    <div class="column-1">
-                        <div class="cube top-layer left-side front-side left-corner-z-pos">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
+            <div id="whole-cube-container">
+                <div class="whole">
+                    <div class="side-front">
+                        <div class="column-1">
+                            <div class="cube top-layer left-side front-side left-corner-z-pos">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube mid-layer left-side front-side left-corner-z-pos">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube bottom-layer left-side front-side left-corner-z-pos">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
                         </div>
-                        <div class="cube mid-layer left-side front-side left-corner-z-pos">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
+                        <div class="column-2">
+                            <div class="cube top-layer middleVert front-side middle-edge-z-pos">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube mid-layer middleVert front-side middle-edge-z-pos">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube bottom-layer middleVert front-side middle-edge-z-pos">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
                         </div>
-                        <div class="cube bottom-layer left-side front-side left-corner-z-pos">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                    </div>
-                    <div class="column-2">
-                        <div class="cube top-layer middleVert front-side middle-edge-z-pos">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube mid-layer middleVert front-side middle-edge-z-pos">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube bottom-layer middleVert front-side middle-edge-z-pos">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                    </div>
-                    <div class="column-3">
-                        <div class="cube top-layer right-side front-side right-corner-z-pos">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube mid-layer right-side front-side right-corner-z-pos">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube bottom-layer right-side front-side right-corner-z-pos">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="side-middle">
-                    <div class="column-1">
-                        <div class="cube top-layer left-side middle-side left-edge-z">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube mid-layer left-side middle-side left-edge-z">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube bottom-layer left-side middle-side left-edge-z">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
+                        <div class="column-3">
+                            <div class="cube top-layer right-side front-side right-corner-z-pos">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube mid-layer right-side front-side right-corner-z-pos">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube bottom-layer right-side front-side right-corner-z-pos">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="column-2">
-                        <div class="cube top-layer middleVert middle-side middle-z">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
+                    <div class="side-middle">
+                        <div class="column-1">
+                            <div class="cube top-layer left-side middle-side left-edge-z">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube mid-layer left-side middle-side left-edge-z">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube bottom-layer left-side middle-side left-edge-z">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
                         </div>
-                        <div class="cube mid-layer middleVert middle-side middle-z">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
+                        <div class="column-2">
+                            <div class="cube top-layer middleVert middle-side middle-z">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube mid-layer middleVert middle-side middle-z">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube bottom-layer middleVert middle-side middle-z">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
                         </div>
-                        <div class="cube bottom-layer middleVert middle-side middle-z">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                    </div>
-                    <div class="column-3">
-                        <div class="cube top-layer right-side middle-side right-edge-z">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube mid-layer right-side middle-side right-edge-z">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube bottom-layer right-side middle-side right-edge-z">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="side-back">
-                    <div class="column-1">
-                        <div class="cube top-layer left-side back-side left-corner-z-neg">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube mid-layer left-side back-side left-corner-z-neg">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube bottom-layer left-side back-side left-corner-z-neg">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                    </div>
-                    <div class="column-2">
-                        <div class="cube top-layer middleVert back-side middle-edge-z-neg">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube mid-layer middleVert back-side middle-edge-z-neg">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
-                        </div>
-                        <div class="cube bottom-layer middleVert back-side middle-edge-z-neg">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
+                        <div class="column-3">
+                            <div class="cube top-layer right-side middle-side right-edge-z">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube mid-layer right-side middle-side right-edge-z">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube bottom-layer right-side middle-side right-edge-z">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="column-3">
-                        <div class="cube top-layer right-side back-side right-corner-z-neg">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
+                    <div class="side-back">
+                        <div class="column-1">
+                            <div class="cube top-layer left-side back-side left-corner-z-neg">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube mid-layer left-side back-side left-corner-z-neg">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube bottom-layer left-side back-side left-corner-z-neg">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
                         </div>
-                        <div class="cube mid-layer right-side back-side right-corner-z-neg">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
+                        <div class="column-2">
+                            <div class="cube top-layer middleVert back-side middle-edge-z-neg">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube mid-layer middleVert back-side middle-edge-z-neg">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube bottom-layer middleVert back-side middle-edge-z-neg">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
                         </div>
-                        <div class="cube bottom-layer right-side back-side right-corner-z-neg">
-                            <div class="cube-face front"></div>
-                            <div class="cube-face back"></div>
-                            <div class="cube-face left"></div>
-                            <div class="cube-face right"></div>
-                            <div class="cube-face top"></div>
-                            <div class="cube-face bottom"></div>
+                        <div class="column-3">
+                            <div class="cube top-layer right-side back-side right-corner-z-neg">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube mid-layer right-side back-side right-corner-z-neg">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
+                            <div class="cube bottom-layer right-side back-side right-corner-z-neg">
+                                <div class="cube-face front"></div>
+                                <div class="cube-face back"></div>
+                                <div class="cube-face left"></div>
+                                <div class="cube-face right"></div>
+                                <div class="cube-face top"></div>
+                                <div class="cube-face bottom"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="button-container">
+                <div>
+                    <button id="frontButton" class="greenBtn disable-dbl-tap-zoom">rotate green +90</button>
+                    <button id="frontButtonInv" class="greenBtn disable-dbl-tap-zoom">rotate green -90</button>
+                    <button id="backButton" class="blueBtn disable-dbl-tap-zoom">rotate blue +90</button>
+                    <button id="backButtonInv" class="blueBtn disable-dbl-tap-zoom">rotate blue -90</button>
+                    <button id="topButton" class="whiteBtn disable-dbl-tap-zoom">rotate white +90</button>
+                    <button id="topButtonInv" class="whiteBtn disable-dbl-tap-zoom">rotate white -90</button>
+                </div>
+                <div>
+                    <button id="bottomButton" class="yellowBtn disable-dbl-tap-zoom">rotate yellow +90</button>
+                    <button id="bottomButtonInv" class="yellowBtn disable-dbl-tap-zoom">rotate yellow -90</button>
+                    <button id="leftButton" class="orangeBtn disable-dbl-tap-zoom">rotate orange +90</button>
+                    <button id="leftButtonInv" class="orangeBtn disable-dbl-tap-zoom">rotate orange -90</button>
+                    <button id="rightButton" class="redBtn disable-dbl-tap-zoom">rotate red +90</button>
+                    <button id="rightButtonInv" class="redBtn disable-dbl-tap-zoom">rotate red -90</button>
+                </div>
+            </div>
         </div>
         <script type="module" src="rubiks.js"></script>
-        <script type="module" src="quaternion.js"></script>
+        <script type="module" src="quaternion.js"></script> 
         <script src="rotate.js"></script>
     </body>
+    <footer>
+        <a href="https://www.linkedin.com/in/miguelzv/">
+            <i class="fa-brands fa-linkedin fa-2xl"></i>
+        </a>
+        <a href="mailto:zmikey16@gmail.com">
+            <i class="fa-regular fa-envelope fa-2xl"></i>
+        </a>
+        <a href="https://github.com/MikeyZv">
+            <i class="fa-brands fa-github fa-2xl"></i>
+        </a>
+    </footer>
 </html>

@@ -1,45 +1,56 @@
+const container = document.querySelector("#whole-cube-container");
 const cube = document.querySelector(".whole");
-let mouseX = 0;
-let mouseY = 0;
+let startTime;
+let allowedTime = 250;
+let elapsedTime;
+let rotationValue = 720;
+let startX;
+let startY;
+let currentX;
+let currentY;
 let rotateX;
 let rotateY;
-const rotationValue = 360;
+let isDragging = false;
 
-const handleMouseDown = () => {
-    window.addEventListener("mousemove", handleMouseMove);
-}
 
-const handleMouseMove = (event) => {
-    mouseX = event.clientX;
-    mouseY = event.clientY;
-    rotateX = -(mouseY / window.innerHeight - 0.5) * rotationValue;
-    rotateY = (mouseX / window.innerHeight - 0.5) * rotationValue;
-    // let rotations = [
-    //     {transform: `rotate3d(1,0,0, ${rotateX}deg) rotate3d(0,1,0, ${rotateY}deg)`},
-    //     {transform: `rotate3d(1,0,0, ${rotateX}deg) rotate3d(0,1,0, ${rotateY}deg)`}
-    // ];
-    // let rotationTiming = {
-    //     duration: 10000,
-    //     iterations: Infinity
-    // };
-    // cube.animate(rotations, rotationTiming);
+cube.style.transform = `rotate3d(1,1,1, 180deg)`;
+
+container.addEventListener('touchstart', () => {
+    isDragging = true;
+}, false);
+
+container.addEventListener("touchmove", function(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    const touch = e.touches[0];
+    let currentX = touch.clientX;
+    let currentY = touch.clientY;
+    let rotateX = -(currentY / window.innerHeight - 0.5) * rotationValue;
+    let rotateY = (currentX / window.innerHeight - 0.5) * rotationValue;
     cube.style.transform = `rotate3d(1,0,0, ${rotateX}deg) rotate3d(0,1,0, ${rotateY}deg)`;
-}
+}, false);
 
-const handleMouseUp = () => {
-    window.removeEventListener("mousemove", handleMouseMove);
-    // let rotations = [
-    //     {transform: `rotate3d(1,0,0, ${rotateX}deg) rotate3d(0,1,0, ${rotateY}deg)`},
-    //     {transform: `rotate3d(1,0,0, ${rotateX}deg) rotate3d(0,1,0, ${rotateY}deg)`}
-    // ];
+container.addEventListener("touchend", () => {
+    isDragging = false;
+}, false);
 
-    // let rotationTiming = {
-    //     duration: 10000,
-    //     iterations: Infinity
-    // };
+container.addEventListener("mousedown", () => {
+    isDragging = true;
+});
 
-    // cube.animate(rotations, rotationTiming);
-}
+container.addEventListener("mousemove", function handleMouseMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
 
-window.addEventListener("mousedown", handleMouseDown);
-window.addEventListener("mouseup", handleMouseUp);
+    let currentX = e.clientX;
+    let currentY = e.clientY;
+    let rotateX = -(currentY / window.innerHeight - 0.5) * rotationValue;
+    let rotateY = (currentX / window.innerHeight - 0.5) * rotationValue;
+    cube.style.transform = `rotate3d(1,0,0, ${rotateX}deg) rotate3d(0,1,0, ${rotateY}deg)`;
+
+});
+
+container.addEventListener("mouseup", () => {
+    isDragging = false;
+});
