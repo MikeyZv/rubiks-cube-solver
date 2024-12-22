@@ -1,7 +1,7 @@
 import {Quaternion} from './quaternion.js';
-import {animateFront, animateBack, animateLeft, animateRight, animateBottom} from './animations.js';
+import {animateFront, animateBack, animateLeft, animateRight, animateBottom, animateTop} from './animations.js';
 
-const delay = 250;
+const delay = 150;
 
 const frontButton = document.getElementById("frontButton");
 const backButton = document.getElementById("backButton");
@@ -167,6 +167,23 @@ function rotateBack(sign) {
 
 function rotateTop(sign) {
     let top = document.querySelectorAll(".top-layer");
+    const hiddenTop = document.querySelector("#hidden-top");
+    const frontFace = document.querySelectorAll(".hide-top-face-front");
+    const backFace = document.querySelectorAll(".hide-top-face-back");
+    const topFace = document.querySelectorAll(".hide-top-face-top");
+    const bottomFace = document.querySelectorAll(".hide-top-face-bottom");
+    const leftFace = document.querySelectorAll(".hide-top-face-left");
+    const rightFace = document.querySelectorAll(".hide-top-face-right");
+
+    for (let i = 0; i < 9; i++) {
+        frontFace[i].style.background = "none";
+        backFace[i].style.background = "none";
+        topFace[i].style.background = "none";
+        bottomFace[i].style.background = "none";
+        leftFace[i].style.background = "none";
+        rightFace[i].style.background = "none";
+    }
+    hiddenTop.style.display = "block";
 
     let topGrid = [top[6], top[7], top[8],  // 0 1 2
                    top[3], top[4], top[5],  // 9 10 11
@@ -178,40 +195,54 @@ function rotateTop(sign) {
     if (sign == '-') {
         corners = [cubes[0], cubes[18], cubes[20], cubes[2]];
         edges = [cubes[1], cubes[9], cubes[19], cubes[11]];
+        animateTop('-');
     } else {
         corners = [cubes[0], cubes[2], cubes[20], cubes[18]];
         edges = [cubes[1], cubes[11], cubes[19], cubes[9]];
+        animateTop('+');
     }
 
     let index = [0,1,2,9,10,11,18,19,20];
 
-    let q2 = new Quaternion(90,0,1,0);
-    q2.toQuaternion();
-    if (sign == '-') {
-        q2.conjugate();
-    }
+    setTimeout(() => {
+        for (let i = 0; i < 9; i++) {
+            frontFace[i].style.background = "green";
+            backFace[i].style.background = "blue";
+            topFace[i].style.background = "yellow";
+            bottomFace[i].style.background = "white";
+            leftFace[i].style.background = "orange";
+            rightFace[i].style.background = "red";
+        }
+        hiddenTop.style.display = "none";
+        
+        let q2 = new Quaternion(90,0,1,0);
+        q2.toQuaternion();
+        if (sign == '-') {
+            q2.conjugate();
+        }
 
-    for (let i = 0; i < 9; i++) {
-        cubes[index[i]].multiply(q2);
-    }
+        for (let i = 0; i < 9; i++) {
+            cubes[index[i]].multiply(q2);
+        }
 
-    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
-    for (let i = 0; i < 3; i++) {
-        corners[i].update(corners[i+1]);
-    }
-    corners[3].update(temp);
+        let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+        for (let i = 0; i < 3; i++) {
+            corners[i].update(corners[i+1]);
+        }
+        corners[3].update(temp);
 
-    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
-    for (let i = 0; i < 3; i++) {
-       edges[i].update(edges[i+1]);
-    }
-    edges[3].update(temp2);
-    
-    for (let i = 0; i < 9; i++) {
-        cubes[index[i]].toAxisAngle();
-        topGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
-        cubes[index[i]].toQuaternion();
-    }
+        let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+        for (let i = 0; i < 3; i++) {
+        edges[i].update(edges[i+1]);
+        }
+        edges[3].update(temp2);
+        
+        for (let i = 0; i < 9; i++) {
+            cubes[index[i]].toAxisAngle();
+            topGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+            cubes[index[i]].toQuaternion();
+        }
+    }, delay);
 };
 
 function rotateMiddleY() {
@@ -255,12 +286,12 @@ function rotateMiddleY() {
 function rotateBottom(sign) {
     const bottom = document.querySelectorAll(".bottom-layer");
     const hiddenBottom = document.querySelector("#hidden-bottom");
-    const frontFace = document.querySelectorAll(".hide-face-front");
-    const backFace = document.querySelectorAll(".hide-face-back");
-    const topFace = document.querySelectorAll(".hide-face-top");
-    const bottomFace = document.querySelectorAll(".hide-face-bottom");
-    const leftFace = document.querySelectorAll(".hide-face-left");
-    const rightFace = document.querySelectorAll(".hide-face-right");
+    const frontFace = document.querySelectorAll(".hide-bottom-face-front");
+    const backFace = document.querySelectorAll(".hide-bottom-face-back");
+    const topFace = document.querySelectorAll(".hide-bottom-face-top");
+    const bottomFace = document.querySelectorAll(".hide-bottom-face-bottom");
+    const leftFace = document.querySelectorAll(".hide-bottom-face-left");
+    const rightFace = document.querySelectorAll(".hide-bottom-face-right");
 
     for (let i = 0; i < 9; i++) {
         frontFace[i].style.background = "none";
@@ -500,7 +531,7 @@ function randomRotation() {
     }
 };
 
-let shuffle = setInterval(randomRotation, 300);
+let shuffle = setInterval(randomRotation, 200);
 
 setTimeout(() => {
     clearInterval(shuffle);
@@ -541,4 +572,4 @@ setTimeout(() => {
     rightButtonInv.addEventListener("click", () => {
         rotateRight('-');
     });
-}, 3000);
+}, 4000);

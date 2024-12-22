@@ -2,7 +2,7 @@ import {cubes} from './rotate.js';
 let rotations;
 let cubeWidth = 50;
 const rotationTiming = {
-    duration: 250,
+    duration: 150,
     iterations: 1
 };
 
@@ -126,5 +126,33 @@ export function animateBottom(sign) {
             {transform: `rotate3d(0,1,0, 90deg)`},
         ];
         hiddenBottom.animate(rotations, rotationTiming);
+    }
+};
+
+export function animateTop(sign) {
+    let top = document.querySelectorAll(".hidden-top-cube");
+
+    let index = [0,1,2,9,10,11,18,19,20];
+
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].toAxisAngle();
+        top[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+        cubes[index[i]].toQuaternion();
+    }
+
+    let hiddenTop = document.querySelector("#hidden-top");
+
+    if (sign == '-') {
+        rotations = [
+            {transform: `rotate3d(0,-1,0, 0deg)`},
+            {transform: `rotate3d(0,-1,0, 90deg)`},
+        ];
+        hiddenTop.animate(rotations, rotationTiming);
+    } else {
+        rotations = [
+            {transform: `rotate3d(0,1,0, 0deg)`},
+            {transform: `rotate3d(0,1,0, 90deg)`},
+        ];
+        hiddenTop.animate(rotations, rotationTiming);
     }
 };
