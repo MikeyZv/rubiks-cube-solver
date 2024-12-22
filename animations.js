@@ -1,3 +1,4 @@
+import {cubes} from './rotate.js';
 let rotations;
 let cubeWidth = 50;
 const rotationTiming = {
@@ -93,5 +94,37 @@ export function animateRight(sign) {
         rightFront.animate(rotations, rotationTiming);
         rightMid.animate(rotations, rotationTiming);
         rightBack.animate(rotations, rotationTiming);
+    }
+};
+
+export function animateBottom(sign) {
+    let bottom = document.querySelectorAll(".hidden-bottom-cube");
+
+    let bottomGrid = [bottom[6], bottom[7], bottom[8],  // 6 7 8
+                      bottom[3], bottom[4], bottom[5],  // 15 16 17
+                      bottom[0], bottom[1], bottom[2]]; // 24 25 26
+
+    let index = [6,7,8,15,16,17,24,25,26];
+
+    for (let i = 0; i < 9; i++) {
+        cubes[index[i]].toAxisAngle();
+        bottomGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+        cubes[index[i]].toQuaternion();
+    }
+
+    let hiddenBottom = document.querySelector("#hidden-bottom");
+
+    if (sign == '-') {
+        rotations = [
+            {transform: `rotate3d(0,-1,0, 0deg)`},
+            {transform: `rotate3d(0,-1,0, 90deg)`},
+        ];
+        hiddenBottom.animate(rotations, rotationTiming);
+    } else {
+        rotations = [
+            {transform: `rotate3d(0,1,0, 0deg)`},
+            {transform: `rotate3d(0,1,0, 90deg)`},
+        ];
+        hiddenBottom.animate(rotations, rotationTiming);
     }
 };

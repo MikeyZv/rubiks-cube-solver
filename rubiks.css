@@ -11,6 +11,29 @@ body {
     --translateZ: 25px;
 }
 
+#hidden-bottom {
+    transform-style: preserve-3d;
+    display: none;
+}
+
+.hidden-row-front {
+    transform-style: preserve-3d;
+    display: flex;
+    transform: translate3d(0px,100px,50px);
+}
+
+.hidden-row-mid {
+    transform-style: preserve-3d;
+    display: flex;
+    transform: translate3d(0px,50px,0px);
+} 
+
+.hidden-row-back {
+    transform-style: preserve-3d;
+    display: flex;
+    transform: translate3d(0px,0px,-50px);
+}
+
 #main-container {
     display: flex;
     flex-direction: column;
@@ -34,6 +57,7 @@ body {
 .whole {
     transform-style: preserve-3d;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     /* animation: spin 5s linear infinite; */
@@ -108,12 +132,12 @@ body {
 }
 
 .top {
-    background-color: white;
+    background-color: yellow;
     transform: rotate3d(1,0,0,90deg) translate3d(0,0,var(--translateZ));
 }
 
 .bottom {
-    background-color: yellow;
+    background-color: white;
     transform: rotate3d(1,0,0,-90deg) translate3d(0,0,var(--translateZ));
 } 
 

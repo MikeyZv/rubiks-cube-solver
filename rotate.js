@@ -1,5 +1,7 @@
 import {Quaternion} from './quaternion.js';
-import {animateFront, animateBack, animateLeft, animateRight} from './animations.js';
+import {animateFront, animateBack, animateLeft, animateRight, animateBottom} from './animations.js';
+
+const delay = 250;
 
 const frontButton = document.getElementById("frontButton");
 const backButton = document.getElementById("backButton");
@@ -15,7 +17,7 @@ const bottomButtonInv = document.getElementById("bottomButtonInv");
 const leftButtonInv = document.getElementById("leftButtonInv");
 const rightButtonInv = document.getElementById("rightButtonInv");
 
-let cubes = [];
+export let cubes = [];
 for (let i = 0; i < 27; i++) {
     cubes[i] = new Quaternion(0,0,0,0);
     cubes[i].toQuaternion();
@@ -71,7 +73,7 @@ function rotateFront(sign) {
             cubes[index].toQuaternion();
             index++;
         }
-    }, 250);
+    }, delay);
 };
 
 function rotateMiddleZ() {
@@ -160,7 +162,7 @@ function rotateBack(sign) {
             backGrid[i].style.transform = `rotate3d(${cubes[i].x}, ${cubes[i].y}, ${cubes[i].z}, ${cubes[i].w}deg)`;
             cubes[i].toQuaternion();
         }  
-    }, 250);
+    }, delay);
 };
 
 function rotateTop(sign) {
@@ -251,7 +253,24 @@ function rotateMiddleY() {
 };
 
 function rotateBottom(sign) {
-    let bottom = document.querySelectorAll(".bottom-layer");
+    const bottom = document.querySelectorAll(".bottom-layer");
+    const hiddenBottom = document.querySelector("#hidden-bottom");
+    const frontFace = document.querySelectorAll(".hide-face-front");
+    const backFace = document.querySelectorAll(".hide-face-back");
+    const topFace = document.querySelectorAll(".hide-face-top");
+    const bottomFace = document.querySelectorAll(".hide-face-bottom");
+    const leftFace = document.querySelectorAll(".hide-face-left");
+    const rightFace = document.querySelectorAll(".hide-face-right");
+
+    for (let i = 0; i < 9; i++) {
+        frontFace[i].style.background = "none";
+        backFace[i].style.background = "none";
+        topFace[i].style.background = "none";
+        bottomFace[i].style.background = "none";
+        leftFace[i].style.background = "none";
+        rightFace[i].style.background = "none";
+    }
+    hiddenBottom.style.display = "block";
 
     let bottomGrid = [bottom[6], bottom[7], bottom[8],  // 6 7 8
                       bottom[3], bottom[4], bottom[5],  // 15 16 17
@@ -263,40 +282,53 @@ function rotateBottom(sign) {
     if (sign == '-') {
         corners = [cubes[6], cubes[24], cubes[26], cubes[8]];
         edges = [cubes[7], cubes[15], cubes[25], cubes[17]];
+        animateBottom('-');
     } else {
         corners = [cubes[6], cubes[8], cubes[26], cubes[24]];
         edges = [cubes[7], cubes[17], cubes[25], cubes[15]];
+        animateBottom('+');
     }
 
     let index = [6,7,8,15,16,17,24,25,26];
 
-    let q2 = new Quaternion(90,0,1,0);
-    q2.toQuaternion();
-    if (sign == '-') {
-        q2.conjugate();
-    }
+    setTimeout(() => {
+        for (let i = 0; i < 9; i++) {
+            frontFace[i].style.background = "green";
+            backFace[i].style.background = "blue";
+            topFace[i].style.background = "yellow";
+            bottomFace[i].style.background = "white";
+            leftFace[i].style.background = "orange";
+            rightFace[i].style.background = "red";
+        }
+        hiddenBottom.style.display = "none";
+        let q2 = new Quaternion(90,0,1,0);
+        q2.toQuaternion();
+        if (sign == '-') {
+            q2.conjugate();
+        }
 
-    for (let i = 0; i < 9; i++) {
-        cubes[index[i]].multiply(q2);
-    }
+        for (let i = 0; i < 9; i++) {
+            cubes[index[i]].multiply(q2);
+        }
 
-    let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
-    for (let i = 0; i < 3; i++) {
-        corners[i].update(corners[i+1]);
-    }
-    corners[3].update(temp);
+        let temp = new Quaternion(corners[0].w, corners[0].x, corners[0].y, corners[0].z);
+        for (let i = 0; i < 3; i++) {
+            corners[i].update(corners[i+1]);
+        }
+        corners[3].update(temp);
 
-    let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
-    for (let i = 0; i < 3; i++) {
-       edges[i].update(edges[i+1]);
-    }
-    edges[3].update(temp2);
-    
-    for (let i = 0; i < 9; i++) {
-        cubes[index[i]].toAxisAngle();
-        bottomGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
-        cubes[index[i]].toQuaternion();
-    }
+        let temp2 = new Quaternion(edges[0].w, edges[0].x, edges[0].y, edges[0].z);
+        for (let i = 0; i < 3; i++) {
+            edges[i].update(edges[i+1]);
+        }
+        edges[3].update(temp2);
+
+        for (let i = 0; i < 9; i++) {
+            cubes[index[i]].toAxisAngle();
+            bottomGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+            cubes[index[i]].toQuaternion();
+        }
+    }, delay);
 };
 
 function rotateLeft(sign) {
@@ -349,7 +381,7 @@ function rotateLeft(sign) {
             leftSideGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
             cubes[index[i]].toQuaternion();
         }
-    }, 250);
+    }, delay);
 };
 
 function rotateMiddleX() {
@@ -440,7 +472,7 @@ function rotateRight(sign) {
             rightSideGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
             cubes[index[i]].toQuaternion();
         }
-    }, 250);
+    }, delay);
 };
 
 function randomRotation() {
@@ -448,22 +480,22 @@ function randomRotation() {
 
     switch(true) {
         case(randomNum == 1):
-            rotateFront();
+            rotateFront('+');
             break;
         case(randomNum == 2):
-            rotateBack();
+            rotateBack('+');
             break;
         case(randomNum == 3):
             rotateTop();
             break;
         case(randomNum == 4):
-            rotateBottom();
+            rotateBottom('+');
             break;
         case(randomNum == 5):
-            rotateLeft();
+            rotateLeft('+');
             break;
         case(randomNum == 6):
-            rotateRight();
+            rotateRight('+');
             break;
     }
 };
