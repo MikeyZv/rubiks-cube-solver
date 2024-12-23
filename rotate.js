@@ -1,7 +1,7 @@
 import {Quaternion} from './quaternion.js';
 import {animateFront, animateBack, animateLeft, animateRight, animateBottom, animateTop} from './animations.js';
 
-const delay = 150;
+const delay = 250;
 
 const frontButton = document.getElementById("frontButton");
 const backButton = document.getElementById("backButton");
@@ -531,7 +531,7 @@ function randomRotation() {
     }
 };
 
-let shuffle = setInterval(randomRotation, 200);
+let shuffle = setInterval(randomRotation, 300);
 
 setTimeout(() => {
     clearInterval(shuffle);
@@ -572,4 +572,4 @@ setTimeout(() => {
     rightButtonInv.addEventListener("click", () => {
         rotateRight('-');
     });
-}, 4000);
+}, 3900);

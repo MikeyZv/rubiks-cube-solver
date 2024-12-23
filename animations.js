@@ -2,7 +2,7 @@ import {cubes} from './rotate.js';
 let rotations;
 let cubeWidth = 50;
 const rotationTiming = {
-    duration: 150,
+    duration: 250,
     iterations: 1
 };
 
@@ -132,11 +132,15 @@ export function animateBottom(sign) {
 export function animateTop(sign) {
     let top = document.querySelectorAll(".hidden-top-cube");
 
+    let topGrid = [top[6], top[7], top[8],  // 0 1 2
+                   top[3], top[4], top[5],  // 9 10 11
+                   top[0], top[1], top[2]]; // 18 19 20
+
     let index = [0,1,2,9,10,11,18,19,20];
 
     for (let i = 0; i < 9; i++) {
         cubes[index[i]].toAxisAngle();
-        top[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
+        topGrid[i].style.transform = `rotate3d(${cubes[index[i]].x}, ${cubes[index[i]].y}, ${cubes[index[i]].z}, ${cubes[index[i]].w}deg)`;
         cubes[index[i]].toQuaternion();
     }
 
