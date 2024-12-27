@@ -36,6 +36,18 @@ body {
     transform: rotate3d(0,1,0,-90deg) translate3d(0,calc(var(--cube-width)*(-2) - (var(--cube-width)*3) + var(--cube-width)/2), calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
 }
 
+#top-listener {
+    height: calc(var(--cube-width) * 3);
+    width: calc(var(--cube-width) * 3);
+    transform: rotate3d(1,0,0,-90deg) translate3d(0,0, calc((var(--cube-width)*(-7)) - (var(--cube-width)/2) - 1px));
+}
+
+#bottom-listener {
+    height: calc(var(--cube-width) * 3);
+    width: calc(var(--cube-width) * 3);
+    transform: rotate3d(1,0,0,90deg) translate3d(0,0, calc((var(--cube-width)*(5)) + (var(--cube-width)) - 1px));
+}
+
 /* hidden top row used for animations */
 #hidden-top {
     transform-style: preserve-3d;
