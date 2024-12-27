@@ -11,8 +11,20 @@ body {
     --translateZ: 25px;
 }
 
-/*  */
+/* control panels */
+#front-listener {
+    height: calc(var(--cube-width) * 3);
+    width: calc(var(--cube-width) * 3);
+    transform: translate3d(0,0,calc(var(--cube-width) + (var(--cube-width)/2) + 1px));
+}
 
+#back-listener {
+    height: calc(var(--cube-width) * 3);
+    width: calc(var(--cube-width) * 3);
+    transform: translate3d(0,calc(var(--cube-width)*(-1) - (var(--cube-width)/2)),calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+}
+
+/* hidden top row used for animations */
 #hidden-top {
     transform-style: preserve-3d;
     display: none;
@@ -36,7 +48,7 @@ body {
     transform: translate3d(0px,-100px,-50px);
 }
 
-/*  */
+/* hidden bottom row used for animations */
 #hidden-bottom {
     transform-style: preserve-3d;
     display: none;

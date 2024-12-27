@@ -1,7 +1,18 @@
-import {Quaternion} from './quaternion.js';
-import {animateFront, animateBack, animateLeft, animateRight, animateBottom, animateTop} from './animations.js';
+import { Quaternion } from './quaternion.js';
+import { animateFront, animateBack, animateLeft, animateRight, animateBottom, animateTop } from './animations.js';
+import { handleTouchStart, handleTouchMove, handleTouchEnd } from './mobileControls.js';
 
 const delay = 250;
+
+const front = document.querySelector("#front-listener");
+front.addEventListener("touchstart", (event)=>{handleTouchStart(front, event)});
+front.addEventListener("touchmove", (event)=>{handleTouchMove(front, event)});
+front.addEventListener("touchend", ()=>{handleTouchEnd("front")});
+
+const back = document.querySelector("#back-listener");
+back.addEventListener("touchstart", (event)=>{handleTouchStart(back, event)});
+back.addEventListener("touchmove", (event)=>{handleTouchMove(back, event)});
+back.addEventListener("touchend", ()=>{handleTouchEnd("back")});
 
 const frontButton = document.getElementById("frontButton");
 const backButton = document.getElementById("backButton");
@@ -23,7 +34,7 @@ for (let i = 0; i < 27; i++) {
     cubes[i].toQuaternion();
 }
 
-function rotateFront(sign) {
+export function rotateFront(sign) {
     let front = document.querySelectorAll(".front-side");
 
     let frontGrid = [front[0], front[3], front[6],  // 18 19 20
@@ -114,7 +125,7 @@ function rotateMiddleZ() {
     }
 };
 
-function rotateBack(sign) {
+export function rotateBack(sign) {
     let back = document.querySelectorAll(".back-side");
 
     let backGrid = [back[0], back[3], back[6],  // 0 1 2
@@ -165,7 +176,7 @@ function rotateBack(sign) {
     }, delay);
 };
 
-function rotateTop(sign) {
+export function rotateTop(sign) {
     let top = document.querySelectorAll(".top-layer");
     const hiddenTop = document.querySelector("#hidden-top");
     const frontFace = document.querySelectorAll(".hide-top-face-front");
@@ -283,7 +294,7 @@ function rotateMiddleY() {
     }
 };
 
-function rotateBottom(sign) {
+export function rotateBottom(sign) {
     const bottom = document.querySelectorAll(".bottom-layer");
     const hiddenBottom = document.querySelector("#hidden-bottom");
     const frontFace = document.querySelectorAll(".hide-bottom-face-front");
@@ -362,7 +373,7 @@ function rotateBottom(sign) {
     }, delay);
 };
 
-function rotateLeft(sign) {
+export function rotateLeft(sign) {
     let leftSide = document.querySelectorAll(".left-side");
 
     let leftSideGrid = [leftSide[0], leftSide[3], leftSide[6],  // 18 9 0
@@ -453,7 +464,7 @@ function rotateMiddleX() {
     }
 };
 
-function rotateRight(sign) {
+export function rotateRight(sign) {
     let rightSide = document.querySelectorAll(".right-side");
 
     let rightSideGrid = [rightSide[0], rightSide[3], rightSide[6],  // 20 11 2
@@ -531,45 +542,45 @@ function randomRotation() {
     }
 };
 
-let shuffle = setInterval(randomRotation, 300);
+// let shuffle = setInterval(randomRotation, 300);
 
-setTimeout(() => {
-    clearInterval(shuffle);
-    frontButton.addEventListener("click", () => {
-        rotateFront('+');
-    });
-    backButton.addEventListener("click", () => {
-        rotateBack('+');
-    });
-    topButton.addEventListener("click", () => {
-        rotateTop('+');
-    });
-    bottomButton.addEventListener("click", () => {
-        rotateBottom('+');
-    });
-    leftButton.addEventListener("click", () => {
-        rotateLeft('+');
-    });
-    rightButton.addEventListener("click", () => {
-        rotateRight('+');
-    });
+// setTimeout(() => {
+//     // clearInterval(shuffle);
+//     frontButton.addEventListener("click", () => {
+//         rotateFront('+');
+//     });
+//     backButton.addEventListener("click", () => {
+//         rotateBack('+');
+//     });
+//     topButton.addEventListener("click", () => {
+//         rotateTop('+');
+//     });
+//     bottomButton.addEventListener("click", () => {
+//         rotateBottom('+');
+//     });
+//     leftButton.addEventListener("click", () => {
+//         rotateLeft('+');
+//     });
+//     rightButton.addEventListener("click", () => {
+//         rotateRight('+');
+//     });
     
-    frontButtonInv.addEventListener("click", () => {
-        rotateFront('-');
-    });
-    backButtonInv.addEventListener("click", () => {
-        rotateBack('-');
-    });
-    topButtonInv.addEventListener("click", () => {
-        rotateTop('-');
-    });
-    bottomButtonInv.addEventListener("click", () => {
-        rotateBottom('-');
-    });
-    leftButtonInv.addEventListener("click", () => {
-        rotateLeft('-');
-    });
-    rightButtonInv.addEventListener("click", () => {
-        rotateRight('-');
-    });
-}, 3900);
+//     frontButtonInv.addEventListener("click", () => {
+//         rotateFront('-');
+//     });
+//     backButtonInv.addEventListener("click", () => {
+//         rotateBack('-');
+//     });
+//     topButtonInv.addEventListener("click", () => {
+//         rotateTop('-');
+//     });
+//     bottomButtonInv.addEventListener("click", () => {
+//         rotateBottom('-');
+//     });
+//     leftButtonInv.addEventListener("click", () => {
+//         rotateLeft('-');
+//     });
+//     rightButtonInv.addEventListener("click", () => {
+//         rotateRight('-');
+//     });
+// }, 3900);
