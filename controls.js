@@ -8,7 +8,7 @@ let rotateY;
 let isDragging = false;
 
 
-cube.style.transform = `rotate3d(0,1,0, 180deg)`;
+cube.style.transform = `rotate3d(0,1,0, -90deg)`;
 
 // container.addEventListener('touchstart', () => {
 //     isDragging = true;

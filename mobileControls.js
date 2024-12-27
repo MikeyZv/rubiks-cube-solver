@@ -30,9 +30,9 @@ export function handleTouchEnd(side) {
                 // Swipe right
                 switch (side) {
                     case "front":
-                        rotateTop('+');
-                        break;
                     case "back":
+                    case "left":
+                    case "right":
                         rotateTop('+');
                         break;
                 }
@@ -40,9 +40,9 @@ export function handleTouchEnd(side) {
                 // Swipe left
                 switch (side) {
                     case "front":
-                        rotateTop('-');
-                        break;
                     case "back":
+                    case "left":
+                    case "right":
                         rotateTop('-');
                         break;
                 }
@@ -52,9 +52,9 @@ export function handleTouchEnd(side) {
                 // Swipe right
                 switch (side) {
                     case "front":
-                        rotateBottom('+');
-                        break;
                     case "back":
+                    case "left":
+                    case "right":
                         rotateBottom('+');
                         break;
                 }
@@ -62,9 +62,9 @@ export function handleTouchEnd(side) {
                 // Swipe left
                 switch (side) {
                     case "front":
-                        rotateBottom('-');
-                        break;
                     case "back":
+                    case "left":
+                    case "right":
                         rotateBottom('-');
                         break;
                 }
@@ -82,6 +82,13 @@ export function handleTouchEnd(side) {
                     case "back":
                         rotateRight('+');
                         break;
+                    case "left":
+                        rotateBack('-');
+                        break;
+                    case "right":
+                        rotateFront('+');
+                        break;
+                        
                 }
             } else {
                 // Swipe up
@@ -91,6 +98,12 @@ export function handleTouchEnd(side) {
                         break; 
                     case "back":
                         rotateRight('-');
+                        break;
+                    case "left":
+                        rotateBack('+');
+                        break;
+                    case "right":
+                        rotateFront('-');
                         break;
                 }
             }
@@ -104,6 +117,12 @@ export function handleTouchEnd(side) {
                     case "back":
                         rotateLeft('+');
                         break;
+                    case "left":
+                        rotateFront('-');
+                        break;
+                    case "right":
+                        rotateBack('+');
+                        break;
                 }
             } else {
                 // Swipe up
@@ -113,6 +132,12 @@ export function handleTouchEnd(side) {
                         break; 
                     case "back":
                         rotateLeft('-');
+                        break;
+                    case "left":
+                        rotateFront('+');
+                        break;
+                    case "right":
+                        rotateBack('-');
                         break;
                 }
             }

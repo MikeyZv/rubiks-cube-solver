@@ -14,6 +14,16 @@ back.addEventListener("touchstart", (event)=>{handleTouchStart(back, event)});
 back.addEventListener("touchmove", (event)=>{handleTouchMove(back, event)});
 back.addEventListener("touchend", ()=>{handleTouchEnd("back")});
 
+const left = document.querySelector("#left-listener");
+left.addEventListener("touchstart", (event)=>{handleTouchStart(left, event)});
+left.addEventListener("touchmove", (event)=>{handleTouchMove(left, event)});
+left.addEventListener("touchend", ()=>{handleTouchEnd("left")});
+
+const right = document.querySelector("#right-listener");
+right.addEventListener("touchstart", (event)=>{handleTouchStart(right, event)});
+right.addEventListener("touchmove", (event)=>{handleTouchMove(right, event)});
+right.addEventListener("touchend", ()=>{handleTouchEnd("right")});
+
 const frontButton = document.getElementById("frontButton");
 const backButton = document.getElementById("backButton");
 const topButton = document.getElementById("topButton");
