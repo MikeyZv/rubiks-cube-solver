@@ -15,37 +15,107 @@ body {
 #front-listener {
     height: calc(var(--cube-width) * 3);
     width: calc(var(--cube-width) * 3);
+    position: absolute;
     transform: translate3d(0,0,calc(var(--cube-width) + (var(--cube-width)/2) + 1px));
+}
+
+#front-top-sensor {
+    height: calc(var(--cube-width)/2);
+    width: calc(var(--cube-width)*2);
+    background-color: white;
+    position: absolute;
+    transform: translate3d(calc(var(--cube-width)/2),0,calc(var(--cube-width) + (var(--cube-width)/2) + 1px));
+}
+
+#front-right-sensor {
+    height: calc(var(--cube-width)*2);
+    width: calc(var(--cube-width)/2);
+    background-color: red;
+    position: absolute;
+    transform: translate3d(calc(var(--cube-width)*3 - var(--cube-width)/2),calc(var(--cube-width)/2),calc(var(--cube-width) + (var(--cube-width)/2) + 1px));
+}
+
+#front-left-sensor {
+    height: calc(var(--cube-width)*2);
+    width: calc(var(--cube-width)/2);
+    background-color: orange;
+    position: absolute;
+    transform: translate3d(0,calc(var(--cube-width)/2),calc(var(--cube-width) + (var(--cube-width)/2) + 1px));
+}
+
+#front-bottom-sensor {
+    height: calc(var(--cube-width)/2);
+    width: calc(var(--cube-width)*2);
+    background-color: yellow;
+    position: absolute;
+    transform: translate3d(calc(var(--cube-width)/2),calc(var(--cube-width)*3 - var(--cube-width)/2),calc(var(--cube-width) + (var(--cube-width)/2) + 1px));
 }
 
 #back-listener {
     height: calc(var(--cube-width) * 3);
     width: calc(var(--cube-width) * 3);
-    transform: translate3d(0,calc(var(--cube-width)*(-1) - (var(--cube-width)/2)),calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+    position: absolute;
+    transform: translate3d(0,0,calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+}
+
+#back-top-sensor {
+    height: calc(var(--cube-width)/2);
+    width: calc(var(--cube-width)*2);
+    background-color: white;
+    position: absolute;
+    transform: translate3d(0,calc(var(--cube-width)*(-1) - var(--cube-width)/4),calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+}
+
+#back-left-sensor {
+    height: calc(var(--cube-width)*2);
+    width: calc(var(--cube-width)/2);
+    background-color: red;
+    position: absolute;
+    transform: translate3d(calc(var(--cube-width) + var(--cube-width)/4),0,calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+}
+
+#back-right-sensor {
+    height: calc(var(--cube-width)*2);
+    width: calc(var(--cube-width)/2);
+    background-color: orange;
+    position: absolute;
+    transform: translate3d(calc(var(--cube-width)*-1 - var(--cube-width)/4),0,calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+}
+
+#back-bottom-sensor {
+    height: calc(var(--cube-width)/2);
+    width: calc(var(--cube-width)*2);
+    background-color: yellow;
+    position: absolute;
+    transform: translate3d(0,calc(var(--cube-width) + var(--cube-width)/4),calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
 }
 
 #left-listener {
     height: calc(var(--cube-width) * 3);
     width: calc(var(--cube-width) * 3);
-    transform: rotate3d(0,1,0,90deg) translate3d(0,calc(var(--cube-width)*(-1) - (var(--cube-width)*2)), calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+    position: absolute;
+    transform: rotate3d(0,1,0,90deg) translate3d(0,0, calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
 }
 
 #right-listener {
     height: calc(var(--cube-width) * 3);
     width: calc(var(--cube-width) * 3);
-    transform: rotate3d(0,1,0,-90deg) translate3d(0,calc(var(--cube-width)*(-2) - (var(--cube-width)*3) + var(--cube-width)/2), calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+    position: absolute;
+    transform: rotate3d(0,1,0,-90deg) translate3d(0,0, calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
 }
 
 #top-listener {
     height: calc(var(--cube-width) * 3);
     width: calc(var(--cube-width) * 3);
-    transform: rotate3d(1,0,0,-90deg) translate3d(0,0, calc((var(--cube-width)*(-7)) - (var(--cube-width)/2) - 1px));
+    position: absolute;
+    transform: rotate3d(1,0,0,-90deg) translate3d(0,0, calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
 }
 
 #bottom-listener {
     height: calc(var(--cube-width) * 3);
     width: calc(var(--cube-width) * 3);
-    transform: rotate3d(1,0,0,90deg) translate3d(0,0, calc((var(--cube-width)*(5)) + (var(--cube-width)) - 1px));
+    position: absolute;
+    transform: rotate3d(1,0,0,90deg) translate3d(0,0, calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
 }
 
 /* hidden top row used for animations */
@@ -57,19 +127,19 @@ body {
 .hidden-top-row-front {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,300px,50px);
+    transform: translate3d(0px,0px,50px);
 }
 
 .hidden-top-row-mid {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,250px,0px);
+    transform: translate3d(0px,-50px,0px);
 } 
 
 .hidden-top-row-back {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,200px,-50px);
+    transform: translate3d(0px,-100px,-50px);
 }
 
 /* hidden bottom row used for animations */
@@ -81,19 +151,19 @@ body {
 .hidden-bottom-row-front {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,-200px,50px);
+    transform: translate3d(0px,100px,50px);
 }
 
 .hidden-bottom-row-mid {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,-250px,0px);
+    transform: translate3d(0px,50px,0px);
 } 
 
 .hidden-bottom-row-back {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,-300px,-50px);
+    transform: translate3d(0px,0px,-50px);
 }
 
 #main-container {
@@ -114,6 +184,7 @@ body {
     background-color: #121212;
     perspective: 900px;
     perspective-origin: center;
+    overflow: hidden;
 }
 
 .whole {

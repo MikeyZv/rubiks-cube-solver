@@ -4,49 +4,19 @@ import { handleTouchStart, handleTouchMove, handleTouchEnd } from './mobileContr
 
 const delay = 250;
 
-const front = document.querySelector("#front-listener");
-front.addEventListener("touchstart", (event)=>{handleTouchStart(front, event)});
-front.addEventListener("touchmove", (event)=>{handleTouchMove(front, event)});
-front.addEventListener("touchend", ()=>{handleTouchEnd("front")});
+// const frontButton = document.getElementById("frontButton");
+// const backButton = document.getElementById("backButton");
+// const topButton = document.getElementById("topButton");
+// const bottomButton = document.getElementById("bottomButton");
+// const leftButton = document.getElementById("leftButton");
+// const rightButton = document.getElementById("rightButton");
 
-const back = document.querySelector("#back-listener");
-back.addEventListener("touchstart", (event)=>{handleTouchStart(back, event)});
-back.addEventListener("touchmove", (event)=>{handleTouchMove(back, event)});
-back.addEventListener("touchend", ()=>{handleTouchEnd("back")});
-
-const left = document.querySelector("#left-listener");
-left.addEventListener("touchstart", (event)=>{handleTouchStart(left, event)});
-left.addEventListener("touchmove", (event)=>{handleTouchMove(left, event)});
-left.addEventListener("touchend", ()=>{handleTouchEnd("left")});
-
-const right = document.querySelector("#right-listener");
-right.addEventListener("touchstart", (event)=>{handleTouchStart(right, event)});
-right.addEventListener("touchmove", (event)=>{handleTouchMove(right, event)});
-right.addEventListener("touchend", ()=>{handleTouchEnd("right")});
-
-const top = document.querySelector("#top-listener");
-top.addEventListener("touchstart", (event)=>{handleTouchStart(top, event)});
-top.addEventListener("touchmove", (event)=>{handleTouchMove(top, event)});
-top.addEventListener("touchend", ()=>{handleTouchEnd("top")});
-
-const bottom = document.querySelector("#bottom-listener");
-bottom.addEventListener("touchstart", (event)=>{handleTouchStart(bottom, event)});
-bottom.addEventListener("touchmove", (event)=>{handleTouchMove(bottom, event)});
-bottom.addEventListener("touchend", ()=>{handleTouchEnd("bottom")});
-
-const frontButton = document.getElementById("frontButton");
-const backButton = document.getElementById("backButton");
-const topButton = document.getElementById("topButton");
-const bottomButton = document.getElementById("bottomButton");
-const leftButton = document.getElementById("leftButton");
-const rightButton = document.getElementById("rightButton");
-
-const frontButtonInv = document.getElementById("frontButtonInv");
-const backButtonInv = document.getElementById("backButtonInv");
-const topButtonInv = document.getElementById("topButtonInv");
-const bottomButtonInv = document.getElementById("bottomButtonInv");
-const leftButtonInv = document.getElementById("leftButtonInv");
-const rightButtonInv = document.getElementById("rightButtonInv");
+// const frontButtonInv = document.getElementById("frontButtonInv");
+// const backButtonInv = document.getElementById("backButtonInv");
+// const topButtonInv = document.getElementById("topButtonInv");
+// const bottomButtonInv = document.getElementById("bottomButtonInv");
+// const leftButtonInv = document.getElementById("leftButtonInv");
+// const rightButtonInv = document.getElementById("rightButtonInv");
 
 export let cubes = [];
 for (let i = 0; i < 27; i++) {
@@ -604,3 +574,70 @@ function randomRotation() {
 //         rotateRight('-');
 //     });
 // }, 3900);
+
+//front touch listeners
+const frontTopSensor = document.querySelector("#front-top-sensor");
+frontTopSensor.addEventListener("touchstart", (event)=>{handleTouchStart(frontTopSensor, event)});
+frontTopSensor.addEventListener("touchmove", (event)=>{handleTouchMove(frontTopSensor, event)});
+frontTopSensor.addEventListener("touchend", ()=>{handleTouchEnd("front-top-sensor")});
+
+const frontRightSensor = document.querySelector("#front-right-sensor");
+frontRightSensor.addEventListener("touchstart", (event)=>{handleTouchStart(frontRightSensor, event)});
+frontRightSensor.addEventListener("touchmove", (event)=>{handleTouchMove(frontRightSensor, event)});
+frontRightSensor.addEventListener("touchend", ()=>{handleTouchEnd("front-right-sensor")});
+
+const frontLeftSensor = document.querySelector("#front-left-sensor");
+frontLeftSensor.addEventListener("touchstart", (event)=>{handleTouchStart(frontLeftSensor, event)});
+frontLeftSensor.addEventListener("touchmove", (event)=>{handleTouchMove(frontLeftSensor, event)});
+frontLeftSensor.addEventListener("touchend", ()=>{handleTouchEnd("front-left-sensor")});
+
+const frontBottomSensor = document.querySelector("#front-bottom-sensor");
+frontBottomSensor.addEventListener("touchstart", (event)=>{handleTouchStart(frontBottomSensor, event)});
+frontBottomSensor.addEventListener("touchmove", (event)=>{handleTouchMove(frontBottomSensor, event)});
+frontBottomSensor.addEventListener("touchend", ()=>{handleTouchEnd("front-bottom-sensor")});
+
+//back touch listeners
+const backTopSensor = document.querySelector("#back-top-sensor");
+backTopSensor.addEventListener("touchstart", (event)=>{handleTouchStart(backTopSensor, event)});
+backTopSensor.addEventListener("touchmove", (event)=>{handleTouchMove(backTopSensor, event)});
+backTopSensor.addEventListener("touchend", ()=>{handleTouchEnd("back-top-sensor")});
+
+const backRightSensor = document.querySelector("#back-right-sensor");
+backRightSensor.addEventListener("touchstart", (event)=>{handleTouchStart(backRightSensor, event)});
+backRightSensor.addEventListener("touchmove", (event)=>{handleTouchMove(backRightSensor, event)});
+backRightSensor.addEventListener("touchend", ()=>{handleTouchEnd("back-right-sensor")});
+
+const backLeftSensor = document.querySelector("#back-left-sensor");
+backLeftSensor.addEventListener("touchstart", (event)=>{handleTouchStart(backLeftSensor, event)});
+backLeftSensor.addEventListener("touchmove", (event)=>{handleTouchMove(backLeftSensor, event)});
+backLeftSensor.addEventListener("touchend", ()=>{handleTouchEnd("back-left-sensor")});
+
+const backBottomSensor = document.querySelector("#back-bottom-sensor");
+backBottomSensor.addEventListener("touchstart", (event)=>{handleTouchStart(backBottomSensor, event)});
+backBottomSensor.addEventListener("touchmove", (event)=>{handleTouchMove(backBottomSensor, event)});
+backBottomSensor.addEventListener("touchend", ()=>{handleTouchEnd("back-bottom-sensor")});
+
+// const back = document.querySelector("#back-listener");
+// back.addEventListener("touchstart", (event)=>{handleTouchStart(back, event)});
+// back.addEventListener("touchmove", (event)=>{handleTouchMove(back, event)});
+// back.addEventListener("touchend", ()=>{handleTouchEnd("back")});
+
+// const left = document.querySelector("#left-listener");
+// left.addEventListener("touchstart", (event)=>{handleTouchStart(left, event)});
+// left.addEventListener("touchmove", (event)=>{handleTouchMove(left, event)});
+// left.addEventListener("touchend", ()=>{handleTouchEnd("left")});
+
+// const right = document.querySelector("#right-listener");
+// right.addEventListener("touchstart", (event)=>{handleTouchStart(right, event)});
+// right.addEventListener("touchmove", (event)=>{handleTouchMove(right, event)});
+// right.addEventListener("touchend", ()=>{handleTouchEnd("right")});
+
+// const top = document.querySelector("#top-listener");
+// top.addEventListener("touchstart", (event)=>{handleTouchStart(top, event)});
+// top.addEventListener("touchmove", (event)=>{handleTouchMove(top, event)});
+// top.addEventListener("touchend", ()=>{handleTouchEnd("top")});
+
+// const bottom = document.querySelector("#bottom-listener");
+// bottom.addEventListener("touchstart", (event)=>{handleTouchStart(bottom, event)});
+// bottom.addEventListener("touchmove", (event)=>{handleTouchMove(bottom, event)});
+// bottom.addEventListener("touchend", ()=>{handleTouchEnd("bottom")});
