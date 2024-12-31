@@ -1,6 +1,7 @@
 import {cubes} from './rotate.js';
 let rotations;
-let cubeWidth = 50;
+const root = document.documentElement; 
+const cubeWidth = getComputedStyle(root).getPropertyValue("--cube-width"); 
 const rotationTiming = {
     duration: 250,
     iterations: 1
@@ -12,14 +13,14 @@ export function animateFront(sign) {
 
     if (sign == '-') {
         rotations = [
-            {transform: `rotate3d(0,0,-1, 0deg) translate3d(0,0,${cubeWidth}px`},
-            {transform: `rotate3d(0,0,-1, 90deg) translate3d(0,0,${cubeWidth}px`},
+            {transform: `rotate3d(0,0,-1, 0deg) translate3d(0,0,${cubeWidth}`},
+            {transform: `rotate3d(0,0,-1, 90deg) translate3d(0,0,${cubeWidth}`},
         ];
         front.animate(rotations, rotationTiming);
     } else {
         rotations = [
-            {transform: `rotate3d(0,0,1, 0deg) translate3d(0,0,${cubeWidth}px`},
-            {transform: `rotate3d(0,0,1, 90deg) translate3d(0,0,${cubeWidth}px`},
+            {transform: `rotate3d(0,0,1, 0deg) translate3d(0,0,${cubeWidth}`},
+            {transform: `rotate3d(0,0,1, 90deg) translate3d(0,0,${cubeWidth}`},
         ];
         front.animate(rotations, rotationTiming);
     }
@@ -30,14 +31,14 @@ export function animateBack(sign) {
 
     if (sign == '-') {
         rotations = [
-            {transform: `rotate3d(0,0,-1, 0deg) translate3d(0,0,-${cubeWidth}px`},
-            {transform: `rotate3d(0,0,-1, 90deg) translate3d(0,0,-${cubeWidth}px`},
+            {transform: `rotate3d(0,0,-1, 0deg) translate3d(0,0,-${cubeWidth}`},
+            {transform: `rotate3d(0,0,-1, 90deg) translate3d(0,0,-${cubeWidth}`},
         ];
         back.animate(rotations, rotationTiming);
     } else {
         rotations = [
-            {transform: `rotate3d(0,0,1, 0deg) translate3d(0,0,-${cubeWidth}px`},
-            {transform: `rotate3d(0,0,1, 90deg) translate3d(0,0,-${cubeWidth}px`},
+            {transform: `rotate3d(0,0,1, 0deg) translate3d(0,0,-${cubeWidth}`},
+            {transform: `rotate3d(0,0,1, 90deg) translate3d(0,0,-${cubeWidth}`},
         ];
         back.animate(rotations, rotationTiming);
     }
@@ -48,8 +49,8 @@ export function animateLeft(sign) {
     let leftMid = document.querySelector(".left-side-col-mid");
     let leftBack = document.querySelector(".left-side-col-back");
     
-    leftFront.style.transformOrigin = `center center -${cubeWidth}px`
-    leftBack.style.transformOrigin = `center center ${cubeWidth}px`
+    leftFront.style.transformOrigin = `center center -${cubeWidth}`
+    leftBack.style.transformOrigin = `center center ${cubeWidth}`
 
     if (sign == '-') {
         rotations = [
@@ -75,8 +76,8 @@ export function animateRight(sign) {
     let rightMid = document.querySelector(".right-side-col-mid");
     let rightBack = document.querySelector(".right-side-col-back");
     
-    rightFront.style.transformOrigin = `center center -${cubeWidth}px`
-    rightBack.style.transformOrigin = `center center ${cubeWidth}px`
+    rightFront.style.transformOrigin = `center center -${cubeWidth}`
+    rightBack.style.transformOrigin = `center center ${cubeWidth}`
 
     if (sign == '-') {
         rotations = [

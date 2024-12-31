@@ -6,9 +6,10 @@
 body {
     background-color: #121212;
 }
+
 :root {
-    --cube-width: 50px;
-    --translateZ: 25px;
+    --cube-width: 60px;
+    --translateZ: 30px;
 }
 
 /* control panels */
@@ -63,19 +64,19 @@ body {
 .hidden-top-row-front {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,0px,50px);
+    transform: translate3d(0px,0px,var(--cube-width));
 }
 
 .hidden-top-row-mid {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,-50px,0px);
+    transform: translate3d(0px,calc(var(--cube-width) * -1),0px);
 } 
 
 .hidden-top-row-back {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,-100px,-50px);
+    transform: translate3d(0px,calc(var(--cube-width) * -2),calc(var(--cube-width) * -1));
 }
 
 /* hidden bottom row used for animations */
@@ -87,19 +88,19 @@ body {
 .hidden-bottom-row-front {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,100px,50px);
+    transform: translate3d(0px,calc(var(--cube-width) * 2),var(--cube-width));
 }
 
 .hidden-bottom-row-mid {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,50px,0px);
+    transform: translate3d(0px,var(--cube-width),0px);
 } 
 
 .hidden-bottom-row-back {
     transform-style: preserve-3d;
     display: flex;
-    transform: translate3d(0px,0px,-50px);
+    transform: translate3d(0px,0px,calc(var(--cube-width) * -1));
 }
 
 #main-container {
@@ -115,7 +116,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 300px;
     width: 100%;
     background-color: #121212;
     perspective: 900px;
@@ -290,5 +291,16 @@ a {
         transform: rotate3d(1,1,0,360);
     }
 } */
+
+@media (min-width: 1200px) {
+    :root {
+        --cube-width: 90px;
+        --translateZ: 45px;
+    }
+
+    #whole-cube-container {
+        height: 550px;
+    }
+}
 
 
