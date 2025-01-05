@@ -20,11 +20,19 @@ body {
     transform: translate3d(0,0,calc(var(--cube-width) + (var(--cube-width)/2) + 1px));
 }
 
+#front-listener:hover {
+    cursor: pointer;
+}
+
 #back-listener {
     height: calc(var(--cube-width) * 3);
     width: calc(var(--cube-width) * 3);
     position: absolute;
     transform: translate3d(0,0,calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+}
+
+#back-listener:hover {
+    cursor: pointer;
 }
 
 #left-listener {
@@ -34,11 +42,19 @@ body {
     transform: rotate3d(0,1,0,90deg) translate3d(0,0, calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
 }
 
+#left-listener:hover {
+    cursor: pointer;
+}
+
 #right-listener {
     height: calc(var(--cube-width) * 3);
     width: calc(var(--cube-width) * 3);
     position: absolute;
     transform: rotate3d(0,1,0,-90deg) translate3d(0,0, calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+}
+
+#right-listener:hover {
+    cursor: pointer;
 }
 
 #top-listener {
@@ -48,11 +64,19 @@ body {
     transform: rotate3d(1,0,0,-90deg) translate3d(0,0, calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
 }
 
+#top-listener:hover {
+    cursor: pointer;
+}
+
 #bottom-listener {
     height: calc(var(--cube-width) * 3);
     width: calc(var(--cube-width) * 3);
     position: absolute;
     transform: rotate3d(1,0,0,90deg) translate3d(0,0, calc((var(--cube-width)*(-1)) - (var(--cube-width)/2) - 1px));
+}
+
+#bottom-listener:hover {
+    cursor: pointer;
 }
 
 /* hidden top row used for animations */
@@ -107,7 +131,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: none;
+    background-color: #121212;
     height: 850px;
     width: 100%;
 }
@@ -118,7 +142,7 @@ body {
     align-items: center;
     height: 350px;
     width: 100%;
-    background-color: red;
+    background-color: #121212;
     perspective: 900px;
     perspective-origin: center;
     overflow: hidden;
@@ -298,8 +322,14 @@ a {
         --translateZ: 45px;
     }
 
+    #main-container {
+        flex-direction: row;
+        align-items: center;
+    }
+
     #whole-cube-container {
         height: 550px;
+        width: 80%;
     }
 }
 

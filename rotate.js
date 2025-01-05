@@ -1,4 +1,5 @@
 import { Quaternion } from './quaternion.js';
+import { Cube } from './cube.js';
 import { animateFront, animateBack, animateLeft, animateRight, animateBottom, animateTop } from './animations.js';
 
 const delay = 250;
@@ -67,9 +68,11 @@ function addListeners() {
 // };
 
 export let cubes = [];
+let solverCubes = [];
 for (let i = 0; i < 27; i++) {
     cubes[i] = new Quaternion(0,0,0,0);
     cubes[i].toQuaternion();
+    solverCubes[i] = new Cube('G','B','R','O','Y','W');
 }
 
 export function rotateFront(sign) {
@@ -90,6 +93,11 @@ export function rotateFront(sign) {
         corners = [cubes[18], cubes[24], cubes[26], cubes[20]];
         edges = [cubes[19], cubes[21], cubes[25], cubes[23]]; 
         animateFront('+');
+
+        //changes colors for solver cubes
+        for (let i = 18; i < 27; i++) {
+            solverCubes[i].spinZ();
+        }
     }
 
     setTimeout(() => {
@@ -181,6 +189,11 @@ export function rotateBack(sign) {
         corners = [cubes[0], cubes[6], cubes[8], cubes[2]];
         edges = [cubes[1], cubes[3], cubes[7], cubes[5]]; 
         animateBack('+');
+
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[i].spinZ();
+        }
     }
 
     setTimeout(() => {
@@ -241,6 +254,9 @@ export function rotateTop(sign) {
     let corners;
     let edges;
 
+    let index = [0,1,2,9,10,11,18,19,20];
+
+
     if (sign == '-') {
         corners = [cubes[0], cubes[18], cubes[20], cubes[2]];
         edges = [cubes[1], cubes[9], cubes[19], cubes[11]];
@@ -249,9 +265,12 @@ export function rotateTop(sign) {
         corners = [cubes[0], cubes[2], cubes[20], cubes[18]];
         edges = [cubes[1], cubes[11], cubes[19], cubes[9]];
         animateTop('+');
-    }
 
-    let index = [0,1,2,9,10,11,18,19,20];
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[index[i]].spinY();
+        }
+    }
 
     setTimeout(() => {
         for (let i = 0; i < 9; i++) {
@@ -359,6 +378,8 @@ export function rotateBottom(sign) {
     let corners;
     let edges;
 
+    let index = [6,7,8,15,16,17,24,25,26];
+
     if (sign == '-') {
         corners = [cubes[6], cubes[24], cubes[26], cubes[8]];
         edges = [cubes[7], cubes[15], cubes[25], cubes[17]];
@@ -367,9 +388,12 @@ export function rotateBottom(sign) {
         corners = [cubes[6], cubes[8], cubes[26], cubes[24]];
         edges = [cubes[7], cubes[17], cubes[25], cubes[15]];
         animateBottom('+');
-    }
 
-    let index = [6,7,8,15,16,17,24,25,26];
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[index[i]].spinY();
+        }
+    }
 
     setTimeout(() => {
         for (let i = 0; i < 9; i++) {
@@ -421,6 +445,8 @@ export function rotateLeft(sign) {
     let corners;
     let edges;
 
+    let index = [18,9,0,21,12,3,24,15,6];
+
     if (sign == '-') {
         corners = [cubes[18], cubes[0], cubes[6], cubes[24]];
         edges = [cubes[9], cubes[3], cubes[15], cubes[21]];
@@ -429,9 +455,12 @@ export function rotateLeft(sign) {
         corners = [cubes[18], cubes[24], cubes[6], cubes[0]];
         edges = [cubes[9], cubes[21], cubes[15], cubes[3]];
         animateLeft('+');
-    }
 
-    let index = [18,9,0,21,12,3,24,15,6];
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[index[i]].spinX();
+        }
+    }
 
     setTimeout(() => {
         let q2 = new Quaternion(90,1,0,0);
@@ -512,6 +541,8 @@ export function rotateRight(sign) {
     let corners;
     let edges;
 
+    let index = [20,11,2,23,14,5,26,17,8];
+
     if (sign == '-') {
         corners = [cubes[20], cubes[2], cubes[8], cubes[26]];
         edges = [cubes[11], cubes[5], cubes[17], cubes[23]];
@@ -520,9 +551,12 @@ export function rotateRight(sign) {
         corners = [cubes[20], cubes[26], cubes[8], cubes[2]];
         edges = [cubes[11], cubes[23], cubes[17], cubes[5]];
         animateRight('+');
-    }
 
-    let index = [20,11,2,23,14,5,26,17,8];
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[index[i]].spinX();
+        }
+    }
 
     setTimeout(() => {
         let q2 = new Quaternion(90,1,0,0);
@@ -566,7 +600,7 @@ function randomRotation() {
             rotateBack('+');
             break;
         case(randomNum == 3):
-            rotateTop();
+            rotateTop('+');
             break;
         case(randomNum == 4):
             rotateBottom('+');
@@ -580,10 +614,10 @@ function randomRotation() {
     }
 };
 
-let shuffle = setInterval(randomRotation, 300);
+// let shuffle = setInterval(randomRotation, 300);
 
 setTimeout(() => {
-    clearInterval(shuffle);
+    // clearInterval(shuffle);
     addListeners();
-}, 3900);
+}, 500);
 

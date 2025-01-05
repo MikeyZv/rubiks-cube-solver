@@ -88,15 +88,3 @@ export class Quaternion {
     }
     
 };
-
-// function slerp(a, b, t) {
-//     let theta = b.w / 2;
-//     let difference = 1 - t;
-//     let topSinA = Math.sin(difference*theta);
-//     let topSinB = Math.sin(t*theta);
-//     let topQA = new Quaternion(a.w*topSinA, a.x*topSinA, a.y*topSinA, a.z*topSinA); 
-//     let topQB = new Quaternion(b.w*topSinB, b.x*topSinB, b.y*topSinB, b.z*topSinB);
-//     let topQR = topQA.add(topQB);
-//     let result = new Quaternion(topQR.w/Math.sin(theta), topQR.x/Math.sin(theta), topQR.y/Math.sin(theta), topQR.z/Math.sin(theta));
-//     return result;
-// };

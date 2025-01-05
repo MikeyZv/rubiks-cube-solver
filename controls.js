@@ -11,7 +11,7 @@ let threshold = 450;
 let isDragging = false
 
 
-cube.style.transform = `rotate3d(1,1,0,140deg)`;
+cube.style.transform = `rotate3d(1,1,0,90deg)`;
 
 container.addEventListener('touchstart', () => {
     isDragging = true;
