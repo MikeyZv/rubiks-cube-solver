@@ -331,6 +331,10 @@ a {
         height: 550px;
         width: 80%;
     }
+    
+    footer {
+        margin-top: 50px;
+    }
 }
 
 

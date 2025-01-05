@@ -89,6 +89,11 @@ export function rotateFront(sign) {
         corners = [cubes[18], cubes[20], cubes[26], cubes[24]];
         edges = [cubes[19], cubes[23], cubes[25], cubes[21]];
         animateFront('-');
+
+        //changes colors for solver cubes
+        for (let i = 18; i < 27; i++) {
+            solverCubes[i].spinZInverse();
+        }
     } else {
         corners = [cubes[18], cubes[24], cubes[26], cubes[20]];
         edges = [cubes[19], cubes[21], cubes[25], cubes[23]]; 
@@ -185,6 +190,11 @@ export function rotateBack(sign) {
         corners = [cubes[0], cubes[2], cubes[8], cubes[6]];
         edges = [cubes[1], cubes[5], cubes[7], cubes[3]]; 
         animateBack('-');
+
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[i].spinZInverse();
+        }
     } else {
         corners = [cubes[0], cubes[6], cubes[8], cubes[2]];
         edges = [cubes[1], cubes[3], cubes[7], cubes[5]]; 
@@ -261,6 +271,11 @@ export function rotateTop(sign) {
         corners = [cubes[0], cubes[18], cubes[20], cubes[2]];
         edges = [cubes[1], cubes[9], cubes[19], cubes[11]];
         animateTop('-');
+
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[index[i]].spinYInverse();
+        }
     } else {
         corners = [cubes[0], cubes[2], cubes[20], cubes[18]];
         edges = [cubes[1], cubes[11], cubes[19], cubes[9]];
@@ -384,6 +399,11 @@ export function rotateBottom(sign) {
         corners = [cubes[6], cubes[24], cubes[26], cubes[8]];
         edges = [cubes[7], cubes[15], cubes[25], cubes[17]];
         animateBottom('-');
+
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[index[i]].spinYInverse();
+        }
     } else {
         corners = [cubes[6], cubes[8], cubes[26], cubes[24]];
         edges = [cubes[7], cubes[17], cubes[25], cubes[15]];
@@ -451,6 +471,11 @@ export function rotateLeft(sign) {
         corners = [cubes[18], cubes[0], cubes[6], cubes[24]];
         edges = [cubes[9], cubes[3], cubes[15], cubes[21]];
         animateLeft('-');
+
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[index[i]].spinXInverse();
+        }
     } else {
         corners = [cubes[18], cubes[24], cubes[6], cubes[0]];
         edges = [cubes[9], cubes[21], cubes[15], cubes[3]];
@@ -547,6 +572,11 @@ export function rotateRight(sign) {
         corners = [cubes[20], cubes[2], cubes[8], cubes[26]];
         edges = [cubes[11], cubes[5], cubes[17], cubes[23]];
         animateRight('-');
+
+        //changes colors for solver cubes
+        for (let i = 0; i < 9; i++) {
+            solverCubes[index[i]].spinXInverse();
+        }
     } else {
         corners = [cubes[20], cubes[26], cubes[8], cubes[2]];
         edges = [cubes[11], cubes[23], cubes[17], cubes[5]];
