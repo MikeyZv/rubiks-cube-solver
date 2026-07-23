@@ -82,6 +82,11 @@ function release() {
 window.addEventListener("pointerup", release);
 window.addEventListener("pointercancel", release);
 
+// On mobile, prevent the default touchmove behavior to allow custom cube rotation handling.
+container.addEventListener("touchmove", (e) => {
+    if (dragging) e.preventDefault();
+}, { passive: false });
+
 // If the gesture was a drag, swallow the click so it doesn't also turn a face.
 // A real tap leaves `moved` false and falls through to the face-turn listeners.
 container.addEventListener("click", (e) => {
