@@ -239,46 +239,6 @@ body {
     touch-action: manipulation;
 }
 
-#button-container {
-    display: flex;
-    justify-content: center;
-}
-
-button {
-    width: 100%;
-    height: 45px;
-    border: none;
-    background-color: #121212;
-}
-
-button:hover {
-    cursor: pointer;
-}
-
-.greenBtn {
-    color: green;
-}
-
-.blueBtn {
-    color: blue;
-}
-
-.whiteBtn {
-    color: white;
-}
-
-.yellowBtn {
-    color: yellow;
-}
-
-.orangeBtn {
-    color: orange;
-}
-
-.redBtn {
-    color: red;
-}
-
 footer {
     text-align: center;
     margin-bottom: 15px; 
@@ -290,21 +250,21 @@ a {
 
 .fa-linkedin {
     position: relative;
-    right: 2%;
+    right: 3%;
     color: white;
-    transform: scale(0.75);
+    transform: scale(0.70);
 }
 
 .fa-envelope {
     color: white;
-    transform: scale(0.75);
+    transform: scale(0.70);
 }
 
 .fa-github{
     position: relative;
-    left: 2%;
+    left: 3%;
     color: white;
-    transform: scale(0.75);
+    transform: scale(0.70);
 }
 
 /* @keyframes spin {

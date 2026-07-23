@@ -15,14 +15,16 @@ function keyframes(x, y, z, suffix = '') {
     ];
 }
 
+// Every animator returns its Animation so the caller can track when the rotation finishes.
+
 // Front/back: spin the whole flat side around Z, translated to its depth.
 export function animateFront(sign) {
-    document.querySelector(".side-front")
+    return document.querySelector(".side-front")
         .animate(keyframes(0, 0, dir(sign), ` translate3d(0,0,${cubeWidth}`), rotationTiming);
 }
 
 export function animateBack(sign) {
-    document.querySelector(".side-back")
+    return document.querySelector(".side-back")
         .animate(keyframes(0, 0, dir(sign), ` translate3d(0,0,-${cubeWidth}`), rotationTiming);
 }
 
@@ -37,12 +39,14 @@ function animateCols(prefix, sign) {
 
     const frames = keyframes(dir(sign), 0, 0);
     front.animate(frames, rotationTiming);
-    mid.animate(frames, rotationTiming);
     back.animate(frames, rotationTiming);
+
+    // The mid column's animation is returned so the caller can track when the rotation finishes.
+    return mid.animate(frames, rotationTiming);
 }
 
-export function animateLeft(sign) { animateCols('left', sign); }
-export function animateRight(sign) { animateCols('right', sign); }
+export function animateLeft(sign) { return animateCols('left', sign); }
+export function animateRight(sign) { return animateCols('right', sign); }
 
 // Top/bottom: paint the flat hidden layer from the live cubes, then spin it around Y.
 function animateSlice(prefix, index, sign) {
@@ -57,8 +61,8 @@ function animateSlice(prefix, index, sign) {
         cubes[index[i]].toQuaternion();
     }
 
-    document.querySelector(`#hidden-${prefix}`).animate(keyframes(0, dir(sign), 0), rotationTiming);
+    return document.querySelector(`#hidden-${prefix}`).animate(keyframes(0, dir(sign), 0), rotationTiming);
 }
 
-export function animateBottom(sign) { animateSlice('bottom', [6, 7, 8, 15, 16, 17, 24, 25, 26], sign); }
-export function animateTop(sign) { animateSlice('top', [0, 1, 2, 9, 10, 11, 18, 19, 20], sign); }
+export function animateBottom(sign) { return animateSlice('bottom', [6, 7, 8, 15, 16, 17, 24, 25, 26], sign); }
+export function animateTop(sign) { return animateSlice('top', [0, 1, 2, 9, 10, 11, 18, 19, 20], sign); }

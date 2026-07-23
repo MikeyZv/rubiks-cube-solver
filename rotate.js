@@ -2,8 +2,6 @@ import { Quaternion } from './quaternion.js';
 import { Cube } from './cube.js';
 import { animateFront, animateBack, animateLeft, animateRight, animateBottom, animateTop } from './animations.js';
 
-const delay = 250;
-
 // Two ways the 9 stickers of a layer are read out of the DOM into grid order.
 const GRID = {
     A: [0, 3, 6, 1, 4, 7, 2, 5, 8], // front / back / left / right
@@ -80,7 +78,7 @@ function performRotation(cfg, sign) {
 
     if (cfg.hide) setHiddenFaces(cfg.hide, false);
 
-    cfg.animate(sign);
+    const anim = cfg.animate(sign);
 
     const spin = minus ? cfg.spin + 'Inverse' : cfg.spin;
     for (const i of cfg.indices) solverCubes[i][spin]();
@@ -88,10 +86,11 @@ function performRotation(cfg, sign) {
     const corners = minus ? rev(cfg.corners) : cfg.corners;
     const edges = minus ? rev(cfg.edges) : cfg.edges;
 
-    setTimeout(() => {
+    // Wait for the animation to finish before applying the permanent rotation to the cubes.
+    anim.onfinish = () => {
         if (cfg.hide) setHiddenFaces(cfg.hide, true);
         spinLayer(cfg.indices, grid, cfg.axis, minus, corners, edges);
-    }, delay);
+    };
 }
 
 export function rotateFront(sign) { performRotation(FACES.front, sign); }
@@ -109,15 +108,13 @@ function randomRotation() {
 function addListeners() {
     const rotators = { front: rotateFront, back: rotateBack, top: rotateTop, bottom: rotateBottom, left: rotateLeft, right: rotateRight };
     for (const [face, fn] of Object.entries(rotators)) {
-        document.getElementById(`${face}Button`).addEventListener('click', () => fn('+'));
-        document.getElementById(`${face}ButtonInv`).addEventListener('click', () => fn('-'));
         document.querySelector(`#${face}-listener`).addEventListener('click', () => fn('+'));
     }
 }
 
-// let shuffle = setInterval(randomRotation, 300);
+let shuffle = setInterval(randomRotation, 300);
 
 setTimeout(() => {
-    // clearInterval(shuffle);
+    clearInterval(shuffle);
     addListeners();
-}, 500);
+}, 3000);
