@@ -1,8 +1,9 @@
 import { cubes } from './rotate.js';
 
 const root = document.documentElement;
-const cubeWidth = getComputedStyle(root).getPropertyValue("--cube-width");
 const rotationTiming = { duration: 250, iterations: 1 };
+
+const cubeWidth = () => getComputedStyle(root).getPropertyValue("--cube-width");
 
 // A '-' turn just negates the rotation axis.
 const dir = sign => (sign == '-' ? -1 : 1);
@@ -20,12 +21,12 @@ function keyframes(x, y, z, suffix = '') {
 // Front/back: spin the whole flat side around Z, translated to its depth.
 export function animateFront(sign) {
     return document.querySelector(".side-front")
-        .animate(keyframes(0, 0, dir(sign), ` translate3d(0,0,${cubeWidth}`), rotationTiming);
+        .animate(keyframes(0, 0, dir(sign), ` translate3d(0,0,${cubeWidth()}`), rotationTiming);
 }
 
 export function animateBack(sign) {
     return document.querySelector(".side-back")
-        .animate(keyframes(0, 0, dir(sign), ` translate3d(0,0,-${cubeWidth}`), rotationTiming);
+        .animate(keyframes(0, 0, dir(sign), ` translate3d(0,0,-${cubeWidth()}`), rotationTiming);
 }
 
 // Left/right: spin three depth-columns around X about a shifted origin.
@@ -34,8 +35,9 @@ function animateCols(prefix, sign) {
     const mid = document.querySelector(`.${prefix}-side-col-mid`);
     const back = document.querySelector(`.${prefix}-side-col-back`);
 
-    front.style.transformOrigin = `center center -${cubeWidth}`;
-    back.style.transformOrigin = `center center ${cubeWidth}`;
+    const w = cubeWidth();
+    front.style.transformOrigin = `center center -${w}`;
+    back.style.transformOrigin = `center center ${w}`;
 
     const frames = keyframes(dir(sign), 0, 0);
     front.animate(frames, rotationTiming);
