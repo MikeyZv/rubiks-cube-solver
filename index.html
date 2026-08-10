@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Rubik's Cube</title>
+        <meta name="description" content="An interactive 3D Rubik's cube built with CSS 3D transforms. Drag to orbit, tap a face to rotate it.">
         <link href="rubiks.css" rel="stylesheet"/>
         <link rel="shortcut icon" href="#">
         <script src="https://kit.fontawesome.com/6d56778525.js" crossorigin="anonymous"></script>
@@ -92,12 +94,12 @@
                             </div> 
                         </div>
                     </div>
-                    <div id="front-listener"></div>
-                    <div id="back-listener"></div>
-                    <div id="left-listener"></div>
-                    <div id="right-listener"></div>
-                    <div id="top-listener"></div>
-                    <div id="bottom-listener"></div>
+                    <div id="front-listener" role="button" tabindex="0" aria-label="Rotate front face"></div>
+                    <div id="back-listener" role="button" tabindex="0" aria-label="Rotate back face"></div>
+                    <div id="left-listener" role="button" tabindex="0" aria-label="Rotate left face"></div>
+                    <div id="right-listener" role="button" tabindex="0" aria-label="Rotate right face"></div>
+                    <div id="top-listener" role="button" tabindex="0" aria-label="Rotate top face"></div>
+                    <div id="bottom-listener" role="button" tabindex="0" aria-label="Rotate bottom face"></div>
                     <div class="side-front">
                         <div class="column-1 left-side-col-front">
                             <div class="cube top-layer left-side front-side">
@@ -421,18 +423,12 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <a href="https://github.com/MikeyZv" aria-label="GitHub">
+                <i class="fa-brands fa-github fa-2xl"></i>
+            </a>
+        </footer>
         <script type="module" src="rotate.js"></script>
         <script src="controls.js"></script>
     </body>
-    <footer>
-        <a href="https://www.linkedin.com/in/miguelzv/">
-            <i class="fa-brands fa-linkedin fa-2xl"></i>
-        </a>
-        <a href="mailto:zmikey16@gmail.com">
-            <i class="fa-regular fa-envelope fa-2xl"></i>
-        </a>
-        <a href="https://github.com/MikeyZv">
-            <i class="fa-brands fa-github fa-2xl"></i>
-        </a>
-    </footer>
 </html>

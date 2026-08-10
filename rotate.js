@@ -3,6 +3,7 @@ import { Cube } from './cube.js';
 import { animateFront, animateBack, animateLeft, animateRight, animateBottom, animateTop } from './animations.js';
 
 // Two ways the 9 stickers of a layer are read out of the DOM into grid order.
+// 
 const GRID = {
     A: [0, 3, 6, 1, 4, 7, 2, 5, 8], // front / back / left / right
     B: [6, 7, 8, 3, 4, 5, 0, 1, 2], // top / bottom
@@ -71,9 +72,20 @@ const FACES = {
               indices: [20, 11, 2, 23, 14, 5, 26, 17, 8], corners: [20, 26, 8, 2], edges: [11, 23, 17, 5] },
 };
 
+// Pending bake function for the current turn, if any.
+let pendingBake = null;
+
 function performRotation(cfg, sign) {
-    const els = document.querySelectorAll(cfg.selector);
-    const grid = GRID[cfg.grid].map(i => els[i]);
+    // Snap any ongoing animations to the end and bake their state immediately.
+    for (const a of document.getAnimations()) a.finish();
+    if (pendingBake) {
+        const stale = pendingBake;
+        pendingBake = null;
+        stale();
+    }
+
+    const elements = document.querySelectorAll(cfg.selector);
+    const grid = GRID[cfg.grid].map(i => elements[i]);
     const minus = sign == '-';
 
     if (cfg.hide) setHiddenFaces(cfg.hide, false);
@@ -86,10 +98,17 @@ function performRotation(cfg, sign) {
     const corners = minus ? rev(cfg.corners) : cfg.corners;
     const edges = minus ? rev(cfg.edges) : cfg.edges;
 
-    // Wait for the animation to finish before applying the permanent rotation to the cubes.
-    anim.onfinish = () => {
+    // Prepare the bake function that will apply the final rotation to the layer.
+    const bake = () => {
         if (cfg.hide) setHiddenFaces(cfg.hide, true);
         spinLayer(cfg.indices, grid, cfg.axis, minus, corners, edges);
+    };
+    pendingBake = bake;
+    anim.onfinish = () => {
+        if (pendingBake === bake) {
+            pendingBake = null;
+            bake();
+        }
     };
 }
 
@@ -106,9 +125,25 @@ function randomRotation() {
 }
 
 function addListeners() {
-    const rotators = { front: rotateFront, back: rotateBack, top: rotateTop, bottom: rotateBottom, left: rotateLeft, right: rotateRight };
-    for (const [face, fn] of Object.entries(rotators)) {
-        document.querySelector(`#${face}-listener`).addEventListener('click', () => fn('+'));
+    // Tapping a face always turns it clockwise as seen while looking at that face.
+    // A '+' turn rotates positively around the CSS axis, which only looks clockwise
+    // from the positive end of the axis — so back, left, and top (the faces on the
+    // negative end; CSS y points down, so top is -y) need the inverse turn.
+    const rotators = {
+        front: [rotateFront, '+'], back: [rotateBack, '-'],
+        left: [rotateLeft, '-'], right: [rotateRight, '+'],
+        top: [rotateTop, '-'], bottom: [rotateBottom, '+'],
+    };
+    for (const [face, [fn, sign]] of Object.entries(rotators)) {
+        const el = document.querySelector(`#${face}-listener`);
+        el.addEventListener('click', () => fn(sign));
+        // The listeners are role="button" divs, so Enter/Space must be wired up manually.
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                fn(sign);
+            }
+        });
     }
 }
 

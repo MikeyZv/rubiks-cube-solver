@@ -248,21 +248,7 @@ a {
     text-decoration: none;
 }
 
-.fa-linkedin {
-    position: relative;
-    right: 3%;
-    color: white;
-    transform: scale(0.70);
-}
-
-.fa-envelope {
-    color: white;
-    transform: scale(0.70);
-}
-
-.fa-github{
-    position: relative;
-    left: 3%;
+.fa-github {
     color: white;
     transform: scale(0.70);
 }
