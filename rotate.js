@@ -1,5 +1,5 @@
 import { Quaternion } from './quaternion.js';
-import { Cube } from './cube.js';
+import { TURNS, applyTurn, solvedState, rev, solve } from './solver.js';
 import { animateFront, animateBack, animateLeft, animateRight, animateBottom, animateTop } from './animations.js';
 
 // Two ways the 9 stickers of a layer are read out of the DOM into grid order.
@@ -9,15 +9,11 @@ const GRID = {
     B: [6, 7, 8, 3, 4, 5, 0, 1, 2], // top / bottom
 };
 
-// The inverse turn cycles the same 4 pieces the other way: swap positions 1 and 3.
-const rev = a => [a[0], a[3], a[2], a[1]];
-
 export let cubes = [];
-let solverCubes = [];
+let solverCubes = solvedState();
 for (let i = 0; i < 27; i++) {
     cubes[i] = new Quaternion(0, 0, 0, 0);
     cubes[i].toQuaternion();
-    solverCubes[i] = new Cube('G', 'B', 'R', 'O', 'Y', 'W');
 }
 
 // Rotate the four given quaternions one step around their shared cycle.
@@ -27,21 +23,27 @@ function cycleQuaternions(quats) {
     quats[3].update(temp);
 }
 
-// Core layer spin shared by every face turn and every middle-slice turn.
-function spinLayer(indices, grid, axis, conjugate, corners, edges) {
-    let q2 = new Quaternion(90, ...axis);
+// Advance the quaternion state of one layer: multiply every piece by the 90-degree
+// turn and cycle the corner and edge pieces one step.
+function spinCubes(cfg, minus) {
+    let q2 = new Quaternion(90, ...cfg.axis);
     q2.toQuaternion();
-    if (conjugate) q2.conjugate();
+    if (minus) q2.conjugate();
 
-    for (const i of indices) cubes[i].multiply(q2);
+    for (const i of cfg.indices) cubes[i].multiply(q2);
 
-    cycleQuaternions(corners.map(i => cubes[i]));
-    cycleQuaternions(edges.map(i => cubes[i]));
+    cycleQuaternions((minus ? rev(cfg.corners) : cfg.corners).map(i => cubes[i]));
+    cycleQuaternions((minus ? rev(cfg.edges) : cfg.edges).map(i => cubes[i]));
+}
 
-    for (let i = 0; i < 9; i++) {
-        const c = cubes[indices[i]];
+// Write every piece's current orientation into the DOM. Repainting the whole cube
+// (not just the turned layer) makes each bake self-correcting: if a repaint were
+// ever lost to a timing bug, the next one restores the entire cube.
+function paintCubes() {
+    for (const [slot, el] of Object.entries(PIECE_ELEMENTS)) {
+        const c = cubes[slot];
         c.toAxisAngle();
-        grid[i].style.transform = `rotate3d(${c.x}, ${c.y}, ${c.z}, ${c.w}deg)`;
+        el.style.transform = `rotate3d(${c.x}, ${c.y}, ${c.z}, ${c.w}deg)`;
         c.toQuaternion();
     }
 }
@@ -56,26 +58,30 @@ function setHiddenFaces(prefix, visible) {
     document.querySelector(`#hidden-${prefix}`).style.display = visible ? 'none' : 'block';
 }
 
-// Per-face configuration. Everything a turn needs that differs between faces.
+// Per-face configuration: the shared turn data from solver.js (indices, cycles,
+// spin) plus everything DOM-specific a turn needs.
 const FACES = {
-    front:  { selector: '.front-side',   grid: 'A', axis: [0, 0, 1], spin: 'spinZ', animate: animateFront,
-              indices: [18, 19, 20, 21, 22, 23, 24, 25, 26], corners: [18, 24, 26, 20], edges: [19, 21, 25, 23] },
-    back:   { selector: '.back-side',    grid: 'A', axis: [0, 0, 1], spin: 'spinZ', animate: animateBack,
-              indices: [0, 1, 2, 3, 4, 5, 6, 7, 8], corners: [0, 6, 8, 2], edges: [1, 3, 7, 5] },
-    top:    { selector: '.top-layer',    grid: 'B', axis: [0, 1, 0], spin: 'spinY', animate: animateTop, hide: 'top',
-              indices: [0, 1, 2, 9, 10, 11, 18, 19, 20], corners: [0, 2, 20, 18], edges: [1, 11, 19, 9] },
-    bottom: { selector: '.bottom-layer', grid: 'B', axis: [0, 1, 0], spin: 'spinY', animate: animateBottom, hide: 'bottom',
-              indices: [6, 7, 8, 15, 16, 17, 24, 25, 26], corners: [6, 8, 26, 24], edges: [7, 17, 25, 15] },
-    left:   { selector: '.left-side',    grid: 'A', axis: [1, 0, 0], spin: 'spinX', animate: animateLeft,
-              indices: [18, 9, 0, 21, 12, 3, 24, 15, 6], corners: [18, 24, 6, 0], edges: [9, 21, 15, 3] },
-    right:  { selector: '.right-side',   grid: 'A', axis: [1, 0, 0], spin: 'spinX', animate: animateRight,
-              indices: [20, 11, 2, 23, 14, 5, 26, 17, 8], corners: [20, 26, 8, 2], edges: [11, 23, 17, 5] },
+    front:  { ...TURNS.front,  selector: '.front-side',   grid: 'A', axis: [0, 0, 1], animate: animateFront },
+    back:   { ...TURNS.back,   selector: '.back-side',    grid: 'A', axis: [0, 0, 1], animate: animateBack },
+    top:    { ...TURNS.top,    selector: '.top-layer',    grid: 'B', axis: [0, 1, 0], animate: animateTop, hide: 'top' },
+    bottom: { ...TURNS.bottom, selector: '.bottom-layer', grid: 'B', axis: [0, 1, 0], animate: animateBottom, hide: 'bottom' },
+    left:   { ...TURNS.left,   selector: '.left-side',    grid: 'A', axis: [1, 0, 0], animate: animateLeft },
+    right:  { ...TURNS.right,  selector: '.right-side',   grid: 'A', axis: [1, 0, 0], animate: animateRight },
 };
+
+// Slot index -> the piece's DOM element, built once from the per-face selectors.
+// (The invisible core piece, slot 13, has no element.)
+const PIECE_ELEMENTS = {};
+for (const cfg of Object.values(FACES)) {
+    const elements = document.querySelectorAll(cfg.selector);
+    const grid = GRID[cfg.grid].map(i => elements[i]);
+    for (let i = 0; i < 9; i++) PIECE_ELEMENTS[cfg.indices[i]] = grid[i];
+}
 
 // Pending bake function for the current turn, if any.
 let pendingBake = null;
 
-function performRotation(cfg, sign) {
+function performRotation(face, sign, duration) {
     // Snap any ongoing animations to the end and bake their state immediately.
     for (const a of document.getAnimations()) a.finish();
     if (pendingBake) {
@@ -84,24 +90,23 @@ function performRotation(cfg, sign) {
         stale();
     }
 
-    const elements = document.querySelectorAll(cfg.selector);
-    const grid = GRID[cfg.grid].map(i => elements[i]);
+    const cfg = FACES[face];
     const minus = sign == '-';
 
     if (cfg.hide) setHiddenFaces(cfg.hide, false);
 
-    const anim = cfg.animate(sign);
+    // The animation must start before the state advances: the hidden top/bottom
+    // stand-in paints itself from the pre-turn quaternions.
+    const anim = cfg.animate(sign, duration);
 
-    const spin = minus ? cfg.spin + 'Inverse' : cfg.spin;
-    for (const i of cfg.indices) solverCubes[i][spin]();
+    // Advance both models immediately; only the repaint waits for the animation.
+    applyTurn(solverCubes, face, sign);
+    spinCubes(cfg, minus);
 
-    const corners = minus ? rev(cfg.corners) : cfg.corners;
-    const edges = minus ? rev(cfg.edges) : cfg.edges;
-
-    // Prepare the bake function that will apply the final rotation to the layer.
+    // Prepare the bake function that repaints the cube once the animation finishes.
     const bake = () => {
         if (cfg.hide) setHiddenFaces(cfg.hide, true);
-        spinLayer(cfg.indices, grid, cfg.axis, minus, corners, edges);
+        paintCubes();
     };
     pendingBake = bake;
     anim.onfinish = () => {
@@ -112,12 +117,53 @@ function performRotation(cfg, sign) {
     };
 }
 
-export function rotateFront(sign) { performRotation(FACES.front, sign); }
-export function rotateBack(sign) { performRotation(FACES.back, sign); }
-export function rotateTop(sign) { performRotation(FACES.top, sign); }
-export function rotateBottom(sign) { performRotation(FACES.bottom, sign); }
-export function rotateLeft(sign) { performRotation(FACES.left, sign); }
-export function rotateRight(sign) { performRotation(FACES.right, sign); }
+export function rotateFront(sign) { performRotation('front', sign); }
+export function rotateBack(sign) { performRotation('back', sign); }
+export function rotateTop(sign) { performRotation('top', sign); }
+export function rotateBottom(sign) { performRotation('bottom', sign); }
+export function rotateLeft(sign) { performRotation('left', sign); }
+export function rotateRight(sign) { performRotation('right', sign); }
+
+// While a solve or shuffle plays back, user taps and both buttons are ignored.
+let busy = false;
+function setBusy(value) {
+    busy = value;
+    document.querySelector('#solve-button').disabled = value;
+    document.querySelector('#shuffle-button').disabled = value;
+}
+
+// Play a list of {face, sign} moves, one turn every `pace` ms, each animated
+// over `duration` ms.
+function playMoves(moves, pace = 300, duration = 250) {
+    setBusy(true);
+    let i = 0;
+    const player = setInterval(() => {
+        const m = moves[i++];
+        performRotation(m.face, m.sign, duration);
+        if (i === moves.length) {
+            clearInterval(player);
+            setBusy(false);
+        }
+    }, pace);
+}
+
+// Compute a solution from the tracked color state and play it back.
+function solveCube() {
+    if (busy) return;
+    const moves = solve(solverCubes);
+    if (moves.length > 0) playMoves(moves);
+}
+
+// Scramble the cube with a burst of random turns.
+function shuffleCube() {
+    if (busy) return;
+    const faces = Object.keys(FACES);
+    const moves = [];
+    for (let i = 0; i < 20; i++) {
+        moves.push({ face: faces[Math.floor(Math.random() * 6)], sign: Math.random() < 0.5 ? '+' : '-' });
+    }
+    playMoves(moves, 150, 130);
+}
 
 function randomRotation() {
     const rotations = [rotateFront, rotateBack, rotateTop, rotateBottom, rotateLeft, rotateRight];
@@ -136,15 +182,17 @@ function addListeners() {
     };
     for (const [face, [fn, sign]] of Object.entries(rotators)) {
         const el = document.querySelector(`#${face}-listener`);
-        el.addEventListener('click', () => fn(sign));
+        el.addEventListener('click', () => { if (!busy) fn(sign); });
         // The listeners are role="button" divs, so Enter/Space must be wired up manually.
         el.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                fn(sign);
+                if (!busy) fn(sign);
             }
         });
     }
+    document.querySelector('#solve-button').addEventListener('click', solveCube);
+    document.querySelector('#shuffle-button').addEventListener('click', shuffleCube);
 }
 
 let shuffle = setInterval(randomRotation, 300);

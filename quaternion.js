@@ -28,6 +28,10 @@ export class Quaternion {
         this.x = newX;
         this.y = newY;
         this.z = newZ;
+
+        // Keep the quaternion unit length so floating-point drift can't build up
+        // over many turns.
+        this.normalize();
     }
 
     add(q) {
@@ -47,13 +51,16 @@ export class Quaternion {
 
 
     toAxisAngle() {
-        if (this.w == 1) {
+        // Rounding can leave w a hair outside [-1, 1], which would make Math.acos
+        // return NaN and permanently poison the transform — clamp it first.
+        let w = Math.max(-1, Math.min(1, this.w));
+        if (w == 1) {
             this.w = 0;
             this.x = 1;
             this.y = 0;
             this.z = 0;
         } else {
-            let radians = 2*Math.acos(this.w);
+            let radians = 2*Math.acos(w);
             let degree = radians * 180 / Math.PI;
             let newW = degree;
             let newX = this.x/Math.sin(radians/2);
