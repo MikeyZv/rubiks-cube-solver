@@ -154,17 +154,25 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    will-change: transform;
     /* animation: spin 5s linear infinite; */
 }
 
-/* The groups that animate during turns keep stable GPU layers, so the browser
-   doesn't leave trails while promoting/demoting them mid-animation. */
-.side-front, .side-back,
-.left-side-col-front, .left-side-col-mid, .left-side-col-back,
-.right-side-col-front, .right-side-col-mid, .right-side-col-back,
-#hidden-top, #hidden-bottom {
-    will-change: transform;
+@media (hover: hover) and (pointer: fine) {
+    /* Stickers are only ever seen from their front side; hiding backfaces keeps
+       the inward-facing surfaces from poking through the cube's edges as specks. */
+    .cube-face {
+        backface-visibility: hidden;
+    }
+
+    /* The groups that animate during turns keep stable GPU layers, so the browser
+       doesn't leave trails while promoting/demoting them mid-animation. */
+    .whole,
+    .side-front, .side-back,
+    .left-side-col-front, .left-side-col-mid, .left-side-col-back,
+    .right-side-col-front, .right-side-col-mid, .right-side-col-back,
+    #hidden-top, #hidden-bottom {
+        will-change: transform;
+    }
 }
 
 .side-front {
@@ -212,9 +220,6 @@ body {
     height: var(--cube-width);
     width: var(--cube-width);
     position: absolute;
-    /* Stickers are only ever seen from their front side; hiding backfaces keeps
-       the inward-facing surfaces from poking through the cube's edges as specks. */
-    backface-visibility: hidden;
     /* outline: 1px black solid; */
 }
 
