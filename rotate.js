@@ -172,22 +172,45 @@ function randomRotation() {
 
 function addListeners() {
     // Tapping a face always turns it clockwise as seen while looking at that face.
-    // A '+' turn rotates positively around the CSS axis, which only looks clockwise
-    // from the positive end of the axis — so back, left, and top (the faces on the
-    // negative end; CSS y points down, so top is -y) need the inverse turn.
     const rotators = {
         front: [rotateFront, '+'], back: [rotateBack, '-'],
         left: [rotateLeft, '-'], right: [rotateRight, '+'],
         top: [rotateTop, '-'], bottom: [rotateBottom, '+'],
     };
+
+    // Each tap waits briefly to see whether a second tap follows before turning.
+    const DOUBLE_TAP_MS = 200;
+    let pending = null;
+
+    function firePending() {
+        clearTimeout(pending.timer);
+        const { fn, sign } = pending;
+        pending = null;
+        // Dropped if a solve/shuffle started while the tap was waiting.
+        if (!busy) fn(sign);
+    }
+
+    function tap(face, fn, sign) {
+        if (busy) return;
+        if (pending && pending.face === face) {
+            clearTimeout(pending.timer);
+            pending = null;
+            fn(sign === '+' ? '-' : '+');
+            return;
+        }
+        // A tap on a different face ends the wait: run the earlier turn now.
+        if (pending) firePending();
+        pending = { face, fn, sign, timer: setTimeout(firePending, DOUBLE_TAP_MS) };
+    }
+
     for (const [face, [fn, sign]] of Object.entries(rotators)) {
         const el = document.querySelector(`#${face}-listener`);
-        el.addEventListener('click', () => { if (!busy) fn(sign); });
+        el.addEventListener('click', () => tap(face, fn, sign));
         // The listeners are role="button" divs, so Enter/Space must be wired up manually.
         el.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                if (!busy) fn(sign);
+                if (!e.repeat) tap(face, fn, sign);
             }
         });
     }

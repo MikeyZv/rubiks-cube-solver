@@ -6,9 +6,9 @@ container.style.touchAction = "none";
 container.style.userSelect = "none";
 container.addEventListener("dragstart", (e) => e.preventDefault());
 
-const SENSITIVITY = 0.5;    // degrees of rotation per pixel dragged
+const SENSITIVITY = 0.20;    // degrees of rotation per pixel dragged
 const FRICTION = 0.99;      // how fast the spin decays after release (0-1)
-const MIN_VELOCITY = 0.02;  // stop the inertia loop once it's this slow
+const MIN_VELOCITY = 0.10;  // stop the inertia loop once it's this slow
 const DRAG_SLOP = 6;        // px of movement before a tap becomes a drag
 
 // Current orientation, and the drag velocity we hand to the inertia loop on release.
@@ -20,6 +20,14 @@ let dragging = false;
 let moved = false;          // did this gesture cross DRAG_SLOP? (drag vs. tap)
 let rafId = null;
 
+// Determine the direction of yaw based on the current X rotation.
+const yawDirection = () => (Math.cos(rotX * Math.PI / 180) < 0 ? -1 : 1);
+
+function rotateBy(degX, degY) {
+    rotY += yawDirection() * degY;
+    rotX += degX;
+}
+
 function render() {
     cube.style.transform = `rotate3d(1,0,0, ${rotX}deg) rotate3d(0,1,0, ${rotY}deg)`;
 }
@@ -27,8 +35,7 @@ function render() {
 function momentum() {
     velX *= FRICTION;
     velY *= FRICTION;
-    rotX += velX;
-    rotY += velY;
+    rotateBy(velX, velY);
     render();
 
     if (Math.abs(velX) > MIN_VELOCITY || Math.abs(velY) > MIN_VELOCITY) {
@@ -65,8 +72,7 @@ window.addEventListener("pointermove", (e) => {
     lastX = e.clientX;
     lastY = e.clientY;
 
-    rotX += velX;
-    rotY += velY;
+    rotateBy(velX, velY);
     render();
 });
 
